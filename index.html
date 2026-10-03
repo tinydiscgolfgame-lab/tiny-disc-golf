@@ -36,8 +36,8 @@ let activePlayerId=null;
 function getPass(){
   const d={version:4,savedAt:new Date().toISOString()};
   $$('[data-key]').forEach(x=>d[x.dataset.key]=x.value);
-  d.bag=$$('#bag .disc-row').map(r=>$$('input',r).map(x=>x.value));
-  d.accessories=$$('#accessories .field').map(r=>$$('input',r).map(x=>x.value));
+  d.bag=$('#bag .disc-row').map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
+  d.accessories=$('#accessories .field').map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
   return d;
 }
 function inputsIn(parent,selector){
