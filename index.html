@@ -27,27 +27,267 @@
 <div class="save-status" id="saveStatus">Player’s Pass saved on this device</div><div class="footer">Tiny Disc Golf • Player’s Pass companion</div>
 </div></div>
 <script>
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-let players=[];let activePlayerId=null;
-function getPass(){const d={version:3,savedAt:new Date().toISOString()};Array.from(document.querySelectorAll('[data-key]')).forEach(x=>d[x.dataset.key]=x.value);d.bag=Array.from(document.querySelectorAll('#bag .disc-row')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));d.accessories=Array.from(document.querySelectorAll('#accessories .field')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));return d}
-function savePlayers(){try{const p=players.find(x=>x.id===activePlayerId);if(p){p.name=(p.pass.playerName||'').trim()||p.name||'Player';p.pass=getPass()}localStorage.setItem('tinyPlayers',JSON.stringify(players));localStorage.setItem('tinyPass',JSON.stringify(p?p.pass:getPass()));$('#saveStatus').textContent='Saved automatically • '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});renderPlayers();renderRoundPlayers()}catch(e){}}
-function loadPass(d){Array.from(document.querySelectorAll('[data-key]')).forEach(x=>x.value=d[x.dataset.key]||'');let bagVals=Array.isArray(d.bag)?d.bag:[];let accVals=Array.isArray(d.accessories)?d.accessories:[];if(bagVals.length&&typeof bagVals[0]==='string')bagVals=Array.from({length:Math.ceil(bagVals.length/5)},(_,i)=>bagVals.slice(i*5,i*5+5));if(accVals.length&&typeof accVals[0]==='string')accVals=Array.from({length:Math.ceil(accVals.length/2)},(_,i)=>accVals.slice(i*2,i*2+2));bag.innerHTML='';acc.innerHTML='';if(bagVals.length){bagVals.forEach(v=>addDisc(Array.isArray(v)?v:[v]))}else{for(let i=0;i<12;i++)addDisc()}if(accVals.length){accVals.forEach(v=>addAccessory(Array.isArray(v)?v:[v]))}else{for(let i=0;i<6;i++)addAccessory()}}
-function loadPlayers(){try{const raw=JSON.parse(localStorage.getItem('tinyPlayers')||'null');if(Array.isArray(raw)&&raw.length){players=raw;activePlayerId=players[0].id;loadPass(players[0].pass||{});return}const old=JSON.parse(localStorage.getItem('tinyPass')||'{}');const first={id:'p'+Date.now(),name:(old.playerName||'Player 1').trim()||'Player 1',pass:old};players=[first];activePlayerId=first.id;loadPass(first.pass)}catch(e){const first={id:'p'+Date.now(),name:'Player 1',pass:{}};players=[first];activePlayerId=first.id;loadPass(first.pass)}}
-function renderPlayers(){const s=$('#activePlayer');if(!s)return;s.innerHTML='';players.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.name||'Player';o.selected=p.id===activePlayerId;s.appendChild(o)})}
-function switchPlayer(id){const current=players.find(x=>x.id===activePlayerId);if(current)current.pass=getPass();const next=players.find(x=>x.id===id);if(!next)return;activePlayerId=id;loadPass(next.pass||{});renderPlayers();renderRoundPlayers();$('#saveStatus').textContent='Now editing '+(next.name||'Player')}
+const $=s=>document.querySelector(s);
+const $$=s=>Array.from(document.querySelectorAll(s));
 
-const bag=$('#bag'); const acc=$('#accessories');
-function addDisc(vals=[]){let r=document.createElement('div');r.className='disc-row';r.innerHTML='<input placeholder="Disc"><input inputmode="decimal" placeholder=""><input inputmode="decimal" placeholder=""><input inputmode="decimal" placeholder=""><input inputmode="decimal" placeholder="">';Array.from(r.querySelectorAll('input')).forEach((x,i)=>x.value=vals[i]||'');bag.appendChild(r);r.querySelectorAll('input').forEach(x=>x.addEventListener('input',savePlayers));}
-function addAccessory(vals=[]){let r=document.createElement('div');r.className='field';r.innerHTML='<input class="input" placeholder=""><input class="input" placeholder="">';Array.from(r.querySelectorAll('input')).forEach((x,i)=>x.value=vals[i]||'');acc.appendChild(r);r.querySelectorAll('input').forEach(x=>x.addEventListener('input',savePlayers));}
-for(let i=0;i<12;i++)addDisc(); for(let i=0;i<6;i++)addAccessory();
-loadPlayers();renderPlayers(); $('#activePlayer').onchange=e=>{switchPlayer(e.target.value)}; $('#addPlayer').onclick=()=>{const name=prompt('Player name:');if(!name||!name.trim())return;const p={id:'p'+Date.now()+Math.random().toString(36).slice(2,7),name:name.trim(),pass:{playerName:name.trim()}};const current=players.find(x=>x.id===activePlayerId);if(current)current.pass=getPass();players.push(p);activePlayerId=p.id;loadPass(p.pass);renderPlayers();renderRoundPlayers();savePlayers()}; $('#removePlayer').onclick=()=>{if(players.length<=1){alert('You need at least one player.');return}const p=players.find(x=>x.id===activePlayerId);if(!confirm('Remove '+(p?.name||'this player')+'?'))return;players=players.filter(x=>x.id!==activePlayerId);activePlayerId=players[0].id;loadPass(players[0].pass||{});renderPlayers();renderRoundPlayers();savePlayers()}; $('#addDisc').onclick=()=>{addDisc();savePlayers()}; $('#addAccessory').onclick=()=>{addAccessory();savePlayers()}; $$('input,textarea').forEach(x=>x.addEventListener('input',savePlayers));
-$$('.tab').forEach(b=>b.onclick=()=>{$$('.tab').forEach(x=>x.classList.remove('active'));$$('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#'+b.dataset.tab).classList.add('active')});
-let rollHistory=[];let finalHistory=[];let currentRoll=null;let modifierCount=0;function getCurrentFinal(){if(currentRoll===null)return null;let total=currentRoll;Array.from(document.querySelectorAll('.modifier-row')).forEach(r=>{const v=Number(r.querySelector('input').value)||0;total+=(r.dataset.op==='subtract'?-v:v)});return total}function updateCalc(){const total=getCurrentFinal();$('#finalValue').textContent=total===null?'—':String(total)}function addModifierRow(value='',op='add'){modifierCount++;const r=document.createElement('div');r.className='modifier-row';r.dataset.op=op;r.innerHTML='<button type="button" class="modifier-op">'+(op==='subtract'?'−':'+')+'</button><input class="input modifier-value" type="number" inputmode="numeric" value="'+value+'" placeholder="0"><button type="button" class="modifier-remove" aria-label="Remove modifier">×</button>';const list=$('#modifierList');list.appendChild(r);r.querySelector('.modifier-op').onclick=()=>{r.dataset.op=r.dataset.op==='subtract'?'add':'subtract';r.querySelector('.modifier-op').textContent=r.dataset.op==='subtract'?'−':'+';updateCalc()};r.querySelector('.modifier-value').oninput=updateCalc;r.querySelector('.modifier-remove').onclick=()=>{if(list.children.length>1){r.remove();updateCalc()}};updateCalc()}function renderHistory(){$('#rolls').textContent=rollHistory.length?rollHistory.join(' • '):'—';$('#finalHistory').textContent=finalHistory.length?finalHistory.join(' • '):'—'}$('#roll').onclick=()=>{const previousFinal=getCurrentFinal();if(previousFinal!==null){finalHistory.unshift(previousFinal);finalHistory=finalHistory.slice(0,5)}currentRoll=Math.floor(Math.random()*100)+1;$('#number').textContent=currentRoll;rollHistory.unshift(currentRoll);rollHistory=rollHistory.slice(0,5);updateCalc();renderHistory()};$('#addModifier').onclick=()=>addModifierRow();$('#resetCalc').onclick=()=>{$('#modifierList').innerHTML='';addModifierRow()};addModifierRow();
-const dirs=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];let spin=0;$('#spin').onclick=()=>{const i=Math.floor(Math.random()*16), target=i*22.5;spin+=1080+((target-spin)%360+360)%360;$('#arrow').style.transform=`rotate(${spin}deg)`;$('#dirResult').textContent=dirs[i]};
-function renderRoundPlayers(){const box=$('#roundParticipants');if(!box)return;box.innerHTML='';players.forEach(p=>{const l=document.createElement('label');l.className='round-check';l.innerHTML='<input type="checkbox" value="'+p.id+'"> <span></span>';l.querySelector('span').textContent=p.name||'Player';box.appendChild(l)});const checks=box.querySelectorAll('input');checks.forEach(x=>x.onchange=renderRoundScores);if(checks.length===1)checks[0].checked=true;renderRoundScores()}
-function renderRoundScores(){const box=$('#roundScores');box.innerHTML='';const ids=Array.from(document.querySelectorAll('#roundParticipants input:checked')).map(x=>x.value);ids.forEach(id=>{const p=players.find(x=>x.id===id);const wrap=document.createElement('div');wrap.className='section';const h=document.createElement('h4');h.textContent=p?.name||'Player';h.style.margin='16px 0 6px';wrap.appendChild(h);const grid=document.createElement('div');grid.className='round-holes';for(let i=1;i<=9;i++){const d=document.createElement('div');d.className='round-hole';d.innerHTML='<label>Hole '+i+'</label><input class="round-score" data-player="'+id+'" data-hole="'+i+'" type="number" inputmode="numeric" min="0" step="1" placeholder="Score">';grid.appendChild(d)}wrap.appendChild(grid);box.appendChild(wrap)}}
-let savedRounds=JSON.parse(localStorage.getItem('tinyRounds')||'[]');
-function renderRounds(){const box=$('#savedRounds');box.innerHTML='';savedRounds.forEach(r=>{const d=document.createElement('div');d.className='saved-round';const totals=(r.players||[]).map(p=>p.name+': '+p.total).join(' • ');const details=(r.players||[]).map(p=>p.name+' — '+p.scores.map((s,i)=>'H'+(i+1)+': '+(s||'—')).join(', ')).join('<br>');d.innerHTML='<div class="saved-round-title"></div><div class="saved-round-score">'+totals+'</div><div class="saved-round-detail">'+details+'</div>';d.querySelector('.saved-round-title').textContent=r.name;box.appendChild(d)})}
-$('#saveRound').onclick=()=>{const ids=Array.from(document.querySelectorAll('#roundParticipants input:checked')).map(x=>x.value);if(!ids.length){alert('Select at least one player.');return}const roundPlayers=ids.map(id=>{const p=players.find(x=>x.id===id);const scores=Array.from(document.querySelectorAll('.round-score[data-player="'+id+'"]')).map(x=>x.value);return{name:p?.name||'Player',scores,total:scores.reduce((a,v)=>a+(Number(v)||0),0)}});const name=$('#roundName').value.trim()||'Unnamed Round';savedRounds.unshift({name,players:roundPlayers});savedRounds=savedRounds.slice(0,20);localStorage.setItem('tinyRounds',JSON.stringify(savedRounds));renderRounds();$('#roundName').value='';renderRoundPlayers()};renderRoundPlayers();renderRounds();
-$('#downloadBtn').onclick=()=>{savePlayers();const blob=new Blob([JSON.stringify({version:3,players},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tiny-disc-golf-players-pass.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);$('#saveStatus').textContent='Players Pass downloaded';}; $('#loadBtn').onclick=()=>$('#loadFile').click(); $('#loadFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const d=JSON.parse(reader.result);if(!d||typeof d!=='object')throw new Error();if(Array.isArray(d.players)){players=d.players;activePlayerId=players[0]?.id||null;loadPass(players[0]?.pass||{});renderPlayers();renderRoundPlayers();savePlayers()}else{loadPass(d);const p={id:'p'+Date.now(),name:(d.playerName||'Player 1').trim()||'Player 1',pass:getPass()};players=[p];activePlayerId=p.id;renderPlayers();renderRoundPlayers();savePlayers()}$('#saveStatus').textContent='Players loaded and saved on this device';}catch(err){alert('That file could not be loaded as a Tiny Disc Golf Players Pass.')}};reader.readAsText(file);e.target.value='';});
+let players=[];
+let activePlayerId=null;
+
+function getPass(){
+  const d={version:4,savedAt:new Date().toISOString()};
+  $$('[data-key]').forEach(x=>d[x.dataset.key]=x.value);
+  d.bag=$$('#bag .disc-row').map(r=>$$('input',r).map(x=>x.value));
+  d.accessories=$$('#accessories .field').map(r=>$$('input',r).map(x=>x.value));
+  return d;
+}
+function inputsIn(parent,selector){
+  return Array.from(parent.querySelectorAll(selector));
+}
+function savePlayers(){
+  try{
+    const p=players.find(x=>x.id===activePlayerId);
+    if(p){
+      p.pass=getPass();
+      p.name=(p.pass.playerName||'').trim()||p.name||'Player';
+    }
+    localStorage.setItem('tinyPlayers',JSON.stringify(players));
+    if(p) localStorage.setItem('tinyPass',JSON.stringify(p.pass));
+    const status=$('#saveStatus');
+    if(status) status.textContent='Saved automatically • '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
+    renderPlayers();
+  }catch(e){console.error(e)}
+}
+function addDisc(vals=[]){
+  const bag=$('#bag');
+  const r=document.createElement('div');
+  r.className='disc-row';
+  r.innerHTML='<input placeholder="Disc"><input inputmode="decimal" placeholder="Speed"><input inputmode="decimal" placeholder="Glide"><input inputmode="decimal" placeholder="Turn"><input inputmode="decimal" placeholder="Fade">';
+  inputsIn(r,'input').forEach((x,i)=>x.value=vals[i]||'');
+  bag.appendChild(r);
+  inputsIn(r,'input').forEach(x=>x.addEventListener('input',savePlayers));
+}
+function addAccessory(vals=[]){
+  const acc=$('#accessories');
+  const r=document.createElement('div');
+  r.className='field';
+  r.innerHTML='<input class="input" placeholder="Gear item"><input class="input" placeholder="Modifier">';
+  inputsIn(r,'input').forEach((x,i)=>x.value=vals[i]||'');
+  acc.appendChild(r);
+  inputsIn(r,'input').forEach(x=>x.addEventListener('input',savePlayers));
+}
+function loadPass(d={}){
+  $$('[data-key]').forEach(x=>x.value=d[x.dataset.key]||'');
+  const bag=$('#bag'), acc=$('#accessories');
+  bag.innerHTML='';
+  acc.innerHTML='';
+  let bv=Array.isArray(d.bag)?d.bag:[], av=Array.isArray(d.accessories)?d.accessories:[];
+  if(bv.length && typeof bv[0]==='string') bv=[bv];
+  if(av.length && typeof av[0]==='string') av=[av];
+  if(bv.length) bv.forEach(v=>addDisc(Array.isArray(v)?v:[v]));
+  else for(let i=0;i<12;i++) addDisc();
+  if(av.length) av.forEach(v=>addAccessory(Array.isArray(v)?v:[v]));
+  else for(let i=0;i<6;i++) addAccessory();
+}
+function renderPlayers(){
+  const s=$('#activePlayer');
+  if(!s)return;
+  s.innerHTML='';
+  players.forEach(p=>{
+    const o=document.createElement('option');
+    o.value=p.id;
+    o.textContent=p.name||'Player';
+    if(p.id===activePlayerId)o.selected=true;
+    s.appendChild(o);
+  });
+}
+function switchPlayer(id){
+  const current=players.find(x=>x.id===activePlayerId);
+  if(current) current.pass=getPass();
+  const next=players.find(x=>x.id===id);
+  if(!next)return;
+  activePlayerId=id;
+  loadPass(next.pass||{});
+  renderPlayers();
+  $('#saveStatus').textContent='Now editing '+(next.name||'Player');
+}
+function loadPlayers(){
+  try{
+    const raw=JSON.parse(localStorage.getItem('tinyPlayers')||'null');
+    if(Array.isArray(raw)&&raw.length){
+      players=raw;
+      players.forEach((p,i)=>{
+        if(!p.id)p.id='p'+Date.now()+i;
+        if(!p.pass)p.pass={playerName:p.name||'Player'};
+      });
+      activePlayerId=players[0].id;
+      loadPass(players[0].pass);
+      return;
+    }
+  }catch(e){}
+  try{
+    const old=JSON.parse(localStorage.getItem('tinyPass')||'null');
+    const pass=old&&typeof old==='object'?old:{};
+    const first={id:'p'+Date.now(),name:(pass.playerName||'Player 1').trim()||'Player 1',pass};
+    players=[first];
+    activePlayerId=first.id;
+    loadPass(pass);
+  }catch(e){
+    players=[{id:'p'+Date.now(),name:'Player 1',pass:{playerName:'Player 1'}}];
+    activePlayerId=players[0].id;
+    loadPass(players[0].pass);
+  }
+}
+
+function renderRoundPlayers(){
+  const box=$('#roundParticipants');
+  if(!box)return;
+  const oldChecked=new Set(inputsIn(box,'input:checked').map(x=>x.value));
+  box.innerHTML='';
+  players.forEach(p=>{
+    const label=document.createElement('label');
+    label.className='round-check';
+    const cb=document.createElement('input');
+    cb.type='checkbox'; cb.value=p.id; cb.checked=oldChecked.has(p.id)||(players.length===1);
+    cb.addEventListener('change',renderRoundScores);
+    const span=document.createElement('span'); span.textContent=p.name||'Player';
+    label.append(cb,span); box.appendChild(label);
+  });
+  renderRoundScores();
+}
+function renderRoundScores(){
+  const box=$('#roundScores');
+  if(!box)return;
+  const checked=inputsIn($('#roundParticipants'),'input:checked').map(x=>x.value);
+  const old={};
+  inputsIn(box,'.round-score').forEach(x=>old[x.dataset.player+'-'+x.dataset.hole]=x.value);
+  box.innerHTML='';
+  checked.forEach(id=>{
+    const p=players.find(x=>x.id===id);
+    const wrap=document.createElement('div'); wrap.className='section';
+    const h=document.createElement('h4'); h.textContent=p?.name||'Player'; h.style.margin='16px 0 6px';
+    wrap.appendChild(h);
+    const grid=document.createElement('div'); grid.className='round-holes';
+    for(let i=1;i<=9;i++){
+      const d=document.createElement('div'); d.className='round-hole';
+      const lab=document.createElement('label'); lab.textContent='Hole '+i;
+      const input=document.createElement('input'); input.className='round-score'; input.type='number'; input.inputMode='numeric'; input.min='0'; input.step='1'; input.placeholder='Score'; input.dataset.player=id; input.dataset.hole=i; input.value=old[id+'-'+i]||'';
+      grid.appendChild(d); d.append(lab,input);
+    }
+    wrap.appendChild(grid); box.appendChild(wrap);
+  });
+}
+
+let savedRounds=[];
+try{savedRounds=JSON.parse(localStorage.getItem('tinyRounds')||'[]');if(!Array.isArray(savedRounds))savedRounds=[]}catch(e){savedRounds=[]}
+function renderRounds(){
+  const box=$('#savedRounds'); if(!box)return;
+  box.innerHTML='';
+  savedRounds.forEach(r=>{
+    const d=document.createElement('div'); d.className='saved-round';
+    const title=document.createElement('div'); title.className='saved-round-title'; title.textContent=r.name;
+    const score=document.createElement('div'); score.className='saved-round-score'; score.textContent=(r.players||[]).map(p=>p.name+': '+p.total).join(' • ');
+    const detail=document.createElement('div'); detail.className='saved-round-detail'; detail.innerHTML=(r.players||[]).map(p=>p.name+' — '+p.scores.map((s,i)=>'H'+(i+1)+': '+(s||'—')).join(', ')).join('<br>');
+    d.append(title,score,detail); box.appendChild(d);
+  });
+}
+
+function init(){
+  $$('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+    $$('.tab').forEach(x=>x.classList.remove('active'));
+    $$('.panel').forEach(x=>x.classList.remove('active'));
+    btn.classList.add('active');
+    $('#'+btn.dataset.tab).classList.add('active');
+  }));
+
+  $('#activePlayer').addEventListener('change',e=>switchPlayer(e.target.value));
+  $('#addPlayer').addEventListener('click',()=>{
+    const name=window.prompt('Player name:');
+    if(!name||!name.trim())return;
+    const current=players.find(x=>x.id===activePlayerId);
+    if(current)current.pass=getPass();
+    const p={id:'p'+Date.now()+Math.random().toString(36).slice(2,7),name:name.trim(),pass:{playerName:name.trim()}};
+    players.push(p); activePlayerId=p.id; loadPass(p.pass); renderPlayers(); renderRoundPlayers(); savePlayers();
+  });
+  $('#removePlayer').addEventListener('click',()=>{
+    if(players.length<=1){window.alert('You need at least one player.');return}
+    const p=players.find(x=>x.id===activePlayerId);
+    if(!window.confirm('Remove '+(p?.name||'this player')+'?'))return;
+    players=players.filter(x=>x.id!==activePlayerId);
+    activePlayerId=players[0].id; loadPass(players[0].pass||{}); renderPlayers(); renderRoundPlayers(); savePlayers();
+  });
+  $('#addDisc').addEventListener('click',()=>{addDisc();savePlayers()});
+  $('#addAccessory').addEventListener('click',()=>{addAccessory();savePlayers()});
+
+  $$('[data-key]').forEach(x=>x.addEventListener('input',savePlayers));
+
+  let rollHistory=[],finalHistory=[],currentRoll=null;
+  function getCurrentFinal(){
+    if(currentRoll===null)return null;
+    let total=currentRoll;
+    $$('.modifier-row').forEach(r=>{const v=Number(r.querySelector('input').value)||0;total+=(r.dataset.op==='subtract'?-v:v)});
+    return total;
+  }
+  function updateCalc(){const v=getCurrentFinal();$('#finalValue').textContent=v===null?'—':String(v)}
+  function addModifierRow(value='',op='add'){
+    const r=document.createElement('div');r.className='modifier-row';r.dataset.op=op;
+    r.innerHTML='<button type="button" class="modifier-op">'+(op==='subtract'?'−':'+')+'</button><input class="input modifier-value" type="number" inputmode="numeric" value="'+value+'" placeholder="0"><button type="button" class="modifier-remove">×</button>';
+    const list=$('#modifierList');list.appendChild(r);
+    r.querySelector('.modifier-op').addEventListener('click',()=>{r.dataset.op=r.dataset.op==='subtract'?'add':'subtract';r.querySelector('.modifier-op').textContent=r.dataset.op==='subtract'?'−':'+';updateCalc()});
+    r.querySelector('.modifier-value').addEventListener('input',updateCalc);
+    r.querySelector('.modifier-remove').addEventListener('click',()=>{if(list.children.length>1){r.remove();updateCalc()}});
+    updateCalc();
+  }
+  $('#roll').addEventListener('click',()=>{
+    const prev=getCurrentFinal();if(prev!==null){finalHistory.unshift(prev);finalHistory=finalHistory.slice(0,5)}
+    currentRoll=Math.floor(Math.random()*100)+1;$('#number').textContent=currentRoll;rollHistory.unshift(currentRoll);rollHistory=rollHistory.slice(0,5);
+    $('#rolls').textContent=rollHistory.join(' • ');$('#finalHistory').textContent=finalHistory.length?finalHistory.join(' • '):'—';updateCalc();
+  });
+  $('#addModifier').addEventListener('click',()=>addModifierRow());
+  $('#resetCalc').addEventListener('click',()=>{$('#modifierList').innerHTML='';addModifierRow()});
+  addModifierRow();
+
+  const dirs=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];let spin=0;
+  $('#spin').addEventListener('click',()=>{const i=Math.floor(Math.random()*16),target=i*22.5;spin+=1080+((target-spin)%360+360)%360;$('#arrow').style.transform='rotate('+spin+'deg)';$('#dirResult').textContent=dirs[i]});
+
+  $('#saveRound').addEventListener('click',()=>{
+    const ids=inputsIn($('#roundParticipants'),'input:checked').map(x=>x.value);
+    if(!ids.length){window.alert('Select at least one player.');return}
+    const roundPlayers=ids.map(id=>{
+      const p=players.find(x=>x.id===id);
+      const scores=inputsIn($('#roundScores'),'.round-score[data-player="'+id+'"]').map(x=>x.value);
+      return{name:p?.name||'Player',scores,total:scores.reduce((a,v)=>a+(Number(v)||0),0)}
+    });
+    savedRounds.unshift({name:$('#roundName').value.trim()||'Unnamed Round',players:roundPlayers});
+    savedRounds=savedRounds.slice(0,20);localStorage.setItem('tinyRounds',JSON.stringify(savedRounds));
+    renderRounds();$('#roundName').value='';renderRoundPlayers();
+  });
+
+  $('#downloadBtn').addEventListener('click',()=>{
+    savePlayers();
+    const blob=new Blob([JSON.stringify({version:4,players},null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tiny-disc-golf-players-pass.json';document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1000);$('#saveStatus').textContent='Players Pass downloaded';
+  });
+  $('#loadBtn').addEventListener('click',()=>$('#loadFile').click());
+  $('#loadFile').addEventListener('change',e=>{
+    const file=e.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=()=>{
+      try{
+        const d=JSON.parse(reader.result);
+        if(Array.isArray(d.players)){
+          players=d.players;activePlayerId=players[0]?.id||null;loadPass(players[0]?.pass||{});
+        }else{
+          const p={id:'p'+Date.now(),name:(d.playerName||'Player 1').trim()||'Player 1',pass:d};
+          players=[p];activePlayerId=p.id;loadPass(p.pass);
+        }
+        renderPlayers();renderRoundPlayers();savePlayers();$('#saveStatus').textContent='Players loaded and saved on this device';
+      }catch(err){window.alert('That file could not be loaded as a Tiny Disc Golf Players Pass.')}
+    };
+    reader.readAsText(file);e.target.value='';
+  });
+
+  loadPlayers();renderPlayers();renderRoundPlayers();renderRounds();
+}
+document.addEventListener('DOMContentLoaded',init);
 </script></body></html>
