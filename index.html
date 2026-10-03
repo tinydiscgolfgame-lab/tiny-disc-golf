@@ -161,8 +161,21 @@ function renderRoundScores(){
   const checked=inputsIn($('#roundParticipants'),'input:checked').map(x=>x.value);
   const old={};
   inputsIn(box,'.round-score').forEach(x=>old[x.dataset.player+'-'+x.dataset.hole]=x.value);
-  const oldPars=roundPars.slice();
   box.innerHTML='';
+
+  const parSection=document.createElement('div'); parSection.className='section';
+  const parHeading=document.createElement('h4'); parHeading.textContent='Hole Par'; parHeading.style.margin='16px 0 6px';
+  parSection.appendChild(parHeading);
+  const parGrid=document.createElement('div'); parGrid.className='round-holes';
+  for(let i=1;i<=roundHoles;i++){
+    const d=document.createElement('div'); d.className='round-hole';
+    const lab=document.createElement('label'); lab.textContent='Hole '+i;
+    const par=document.createElement('input'); par.type='number'; par.inputMode='numeric'; par.min='1'; par.step='1'; par.placeholder='Par'; par.value=roundPars[i-1]||3; par.dataset.hole=i; par.className='round-par-input';
+    par.addEventListener('input',e=>{roundPars[i-1]=Math.max(1,Number(e.target.value)||1);});
+    d.append(lab,par); parGrid.appendChild(d);
+  }
+  parSection.appendChild(parGrid); box.appendChild(parSection);
+
   checked.forEach(id=>{
     const p=players.find(x=>x.id===id);
     const wrap=document.createElement('div'); wrap.className='section';
@@ -172,11 +185,9 @@ function renderRoundScores(){
     for(let i=1;i<=roundHoles;i++){
       const d=document.createElement('div'); d.className='round-hole';
       const lab=document.createElement('label'); lab.textContent='Hole '+i;
-      const parLabel=document.createElement('div'); parLabel.className='round-par'; parLabel.textContent='Par';
-      const par=document.createElement('input'); par.type='number'; par.inputMode='numeric'; par.min='1'; par.step='1'; par.placeholder='Par'; par.value=oldPars[i-1]||3; par.dataset.hole=i; par.className='round-par-input';
+      const parLabel=document.createElement('div'); parLabel.className='round-par'; parLabel.textContent='Par '+(roundPars[i-1]||3);
       const input=document.createElement('input'); input.className='round-score'; input.type='number'; input.inputMode='numeric'; input.min='0'; input.step='1'; input.placeholder='Score'; input.dataset.player=id; input.dataset.hole=i; input.value=old[id+'-'+i]||'';
-      par.addEventListener('input',e=>{roundPars[i-1]=Math.max(1,Number(e.target.value)||1);});
-      grid.appendChild(d); d.append(lab,parLabel,par,input);
+      grid.appendChild(d); d.append(lab,parLabel,input);
     }
     wrap.appendChild(grid); box.appendChild(wrap);
   });
