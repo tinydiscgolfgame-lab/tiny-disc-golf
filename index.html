@@ -61,7 +61,7 @@ function addDisc(vals=[]){
   const bag=$('#bag');
   const r=document.createElement('div');
   r.className='disc-row';
-  r.innerHTML='<input placeholder="Disc"><input inputmode="decimal" placeholder="Speed"><input inputmode="decimal" placeholder="Glide"><input inputmode="decimal" placeholder="Turn"><input inputmode="decimal" placeholder="Fade">';
+  r.innerHTML='<input placeholder="Disc"><input type="number" inputmode="decimal" min="0" step="0.1" placeholder="Speed"><input type="number" inputmode="decimal" min="0" step="0.1" placeholder="Glide"><input type="number" inputmode="decimal" step="0.1" placeholder="Turn"><input type="number" inputmode="decimal" step="0.1" placeholder="Fade">';
   inputsIn(r,'input').forEach((x,i)=>x.value=vals[i]||'');
   bag.appendChild(r);
   inputsIn(r,'input').forEach(x=>x.addEventListener('input',savePlayers));
@@ -191,6 +191,44 @@ function renderRounds(){
   });
 }
 
+function addNewPlayer(){
+  const name=window.prompt('Player name:');
+  if(!name||!name.trim())return;
+  const current=players.find(x=>x.id===activePlayerId);
+  if(current)current.pass=getPass();
+  const p={id:'p'+Date.now()+Math.random().toString(36).slice(2,8),name:name.trim(),pass:{version:4,playerName:name.trim(),bag:[],accessories:[]}};
+  players.push(p);
+  activePlayerId=p.id;
+  loadPass(p.pass);
+  renderPlayers();
+  renderRoundPlayers();
+  localStorage.setItem('tinyPlayers',JSON.stringify(players));
+  localStorage.setItem('tinyPass',JSON.stringify(p.pass));
+  $('#saveStatus').textContent='Added '+p.name;
+}
+function removeCurrentPlayer(){
+  if(players.length<=1){window.alert('You need at least one player.');return}
+  const p=players.find(x=>x.id===activePlayerId);
+  if(!window.confirm('Remove '+(p?.name||'this player')+'?'))return;
+  players=players.filter(x=>x.id!==activePlayerId);
+  activePlayerId=players[0].id;
+  loadPass(players[0].pass||{});
+  renderPlayers();
+  renderRoundPlayers();
+  savePlayers();
+}
+function changeCurrentPlayer(id){
+  const current=players.find(x=>x.id===activePlayerId);
+  if(current)current.pass=getPass();
+  const next=players.find(x=>x.id===id);
+  if(!next)return;
+  activePlayerId=next.id;
+  loadPass(next.pass||{});
+  renderPlayers();
+  renderRoundPlayers();
+  $('#saveStatus').textContent='Now editing '+(next.name||'Player');
+}
+
 function init(){
   $$('.tab').forEach(btn=>btn.addEventListener('click',()=>{
     $$('.tab').forEach(x=>x.classList.remove('active'));
@@ -199,22 +237,9 @@ function init(){
     $('#'+btn.dataset.tab).classList.add('active');
   }));
 
-  $('#activePlayer').addEventListener('change',e=>switchPlayer(e.target.value));
-  $('#addPlayer').addEventListener('click',()=>{
-    const name=window.prompt('Player name:');
-    if(!name||!name.trim())return;
-    const current=players.find(x=>x.id===activePlayerId);
-    if(current)current.pass=getPass();
-    const p={id:'p'+Date.now()+Math.random().toString(36).slice(2,7),name:name.trim(),pass:{playerName:name.trim()}};
-    players.push(p); activePlayerId=p.id; loadPass(p.pass); renderPlayers(); renderRoundPlayers(); savePlayers();
-  });
-  $('#removePlayer').addEventListener('click',()=>{
-    if(players.length<=1){window.alert('You need at least one player.');return}
-    const p=players.find(x=>x.id===activePlayerId);
-    if(!window.confirm('Remove '+(p?.name||'this player')+'?'))return;
-    players=players.filter(x=>x.id!==activePlayerId);
-    activePlayerId=players[0].id; loadPass(players[0].pass||{}); renderPlayers(); renderRoundPlayers(); savePlayers();
-  });
+  $('#activePlayer').onchange=e=>changeCurrentPlayer(e.target.value);
+  $('#addPlayer').onclick=addNewPlayer;
+  $('#removePlayer').onclick=removeCurrentPlayer;
   $('#addDisc').addEventListener('click',()=>{addDisc();savePlayers()});
   $('#addAccessory').addEventListener('click',()=>{addAccessory();savePlayers()});
 
