@@ -163,34 +163,80 @@ function renderRoundScores(){
   inputsIn(box,'.round-score').forEach(x=>old[x.dataset.player+'-'+x.dataset.hole]=x.value);
   box.innerHTML='';
 
-  const parSection=document.createElement('div'); parSection.className='section';
-  const parHeading=document.createElement('h4'); parHeading.textContent='Hole Par'; parHeading.style.margin='16px 0 6px';
-  parSection.appendChild(parHeading);
-  const parGrid=document.createElement('div'); parGrid.className='round-holes';
-  for(let i=1;i<=roundHoles;i++){
-    const d=document.createElement('div'); d.className='round-hole';
-    const lab=document.createElement('label'); lab.textContent='Hole '+i;
-    const par=document.createElement('input'); par.type='number'; par.inputMode='numeric'; par.min='1'; par.step='1'; par.placeholder='Par'; par.value=roundPars[i-1]||''; par.dataset.hole=i; par.className='round-par-input';
-    par.addEventListener('input',e=>{roundPars[i-1]=e.target.value;});
-    d.append(lab,par); parGrid.appendChild(d);
-  }
-  parSection.appendChild(parGrid); box.appendChild(parSection);
+  const heading=document.createElement('h4');
+  heading.textContent='Round Scorecard';
+  heading.style.margin='16px 0 6px';
+  box.appendChild(heading);
 
   checked.forEach(id=>{
     const p=players.find(x=>x.id===id);
-    const wrap=document.createElement('div'); wrap.className='section';
-    const h=document.createElement('h4'); h.textContent=p?.name||'Player'; h.style.margin='16px 0 6px';
+    const wrap=document.createElement('div');
+    wrap.className='section';
+    const h=document.createElement('h4');
+    h.textContent=p?.name||'Player';
+    h.style.margin='12px 0 6px';
     wrap.appendChild(h);
-    const grid=document.createElement('div'); grid.className='round-holes';
+
+    const grid=document.createElement('div');
+    grid.className='round-holes';
+
     for(let i=1;i<=roundHoles;i++){
-      const d=document.createElement('div'); d.className='round-hole';
-      const lab=document.createElement('label'); lab.textContent='Hole '+i;
-      const parLabel=document.createElement('div'); parLabel.className='round-par'; parLabel.textContent=roundPars[i-1]?'Par '+roundPars[i-1]:'Par not set';
-      const input=document.createElement('input'); input.className='round-score'; input.type='number'; input.inputMode='numeric'; input.min='0'; input.step='1'; input.placeholder='Score'; input.dataset.player=id; input.dataset.hole=i; input.value=old[id+'-'+i]||'';
-      grid.appendChild(d); d.append(lab,parLabel,input);
+      const d=document.createElement('div');
+      d.className='round-hole';
+
+      const lab=document.createElement('label');
+      lab.textContent='Hole '+i;
+
+      const parText=document.createElement('div');
+      parText.className='round-par';
+      parText.textContent='Par';
+
+      const par=document.createElement('input');
+      par.type='number';
+      par.inputMode='numeric';
+      par.min='1';
+      par.step='1';
+      par.placeholder='Par';
+      par.value=roundPars[i-1]||'';
+      par.className='round-par-input';
+      par.dataset.hole=i;
+
+      const scoreText=document.createElement('div');
+      scoreText.className='round-par';
+      scoreText.textContent='Score';
+
+      const input=document.createElement('input');
+      input.className='round-score';
+      input.type='number';
+      input.inputMode='numeric';
+      input.min='0';
+      input.step='1';
+      input.placeholder='Score';
+      input.dataset.player=id;
+      input.dataset.hole=i;
+      input.value=old[id+'-'+i]||'';
+
+      par.addEventListener('input',e=>{
+        roundPars[i-1]=e.target.value;
+        inputsIn(box,'.round-par-input[data-hole="'+i+'"]').forEach(x=>{
+          if(x!==e.target)x.value=e.target.value;
+        });
+      });
+
+      d.append(lab,parText,par,scoreText,input);
+      grid.appendChild(d);
     }
-    wrap.appendChild(grid); box.appendChild(wrap);
+
+    wrap.appendChild(grid);
+    box.appendChild(wrap);
   });
+
+  if(!checked.length){
+    const note=document.createElement('div');
+    note.className='note';
+    note.textContent='Select at least one player above to display the scorecard.';
+    box.appendChild(note);
+  }
 }
 
 let savedRounds=[];
@@ -305,7 +351,9 @@ function init(){
   $('#saveRound').addEventListener('click',()=>{
     const ids=inputsIn($('#roundParticipants'),'input:checked').map(x=>x.value);
     if(!ids.length){window.alert('Select at least one player.');return}
-    const pars=roundPars.slice(0,roundHoles).map(v=>Math.max(1,Number(v)||0));
+    const missingPar=roundPars.slice(0,roundHoles).findIndex(v=>!Number.isInteger(Number(v))||Number(v)<1);
+    if(missingPar!==-1){window.alert('Enter a positive whole-number Par for Hole '+(missingPar+1)+' before saving.');return}
+    const pars=roundPars.slice(0,roundHoles).map(v=>Number(v));
     const roundPlayers=ids.map(id=>{
       const p=players.find(x=>x.id===id);
       const scores=inputsIn($('#roundScores'),'.round-score[data-player="'+id+'"]').map(x=>x.value);
