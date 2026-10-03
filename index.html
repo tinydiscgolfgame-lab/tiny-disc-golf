@@ -177,6 +177,11 @@ function renderRoundScores(){
     h.style.margin='12px 0 6px';
     wrap.appendChild(h);
 
+    const summary=document.createElement('div');
+    summary.className='round-total';
+    summary.innerHTML='Score: <strong class="round-score-total">0</strong> &nbsp; Par: <strong class="round-par-total">0</strong> &nbsp; <span class="round-vs-par">—</span>';
+    wrap.appendChild(summary);
+
     const grid=document.createElement('div');
     grid.className='round-holes';
 
@@ -221,7 +226,10 @@ function renderRoundScores(){
         inputsIn(box,'.round-par-input[data-hole="'+i+'"]').forEach(x=>{
           if(x!==e.target)x.value=e.target.value;
         });
+        updateRoundTotals();
       });
+
+      input.addEventListener('input',updateRoundTotals);
 
       d.append(lab,parText,par,scoreText,input);
       grid.appendChild(d);
@@ -231,11 +239,29 @@ function renderRoundScores(){
     box.appendChild(wrap);
   });
 
+  function updateRoundTotals(){
+    checked.forEach(id=>{
+      const scores=inputsIn(box,'.round-score[data-player="'+id+'"]');
+      let score=0, parTotal=0;
+      scores.forEach(x=>{score+=Number(x.value)||0});
+      roundPars.slice(0,roundHoles).forEach(v=>{parTotal+=Number(v)||0});
+      const diff=score-parTotal;
+      const total=box.querySelector('.round-score-total')&&box.querySelector('.round-score[data-player="'+id+'"]')?.closest('.section')?.querySelector('.round-score-total');
+      const parEl=box.querySelector('.round-score[data-player="'+id+'"]')?.closest('.section')?.querySelector('.round-par-total');
+      const vsEl=box.querySelector('.round-score[data-player="'+id+'"]')?.closest('.section')?.querySelector('.round-vs-par');
+      if(total)total.textContent=score;
+      if(parEl)parEl.textContent=parTotal;
+      if(vsEl)vsEl.textContent=diff===0?'Even':(diff>0?'+'+diff:diff);
+    });
+  }
+
   if(!checked.length){
     const note=document.createElement('div');
     note.className='note';
     note.textContent='Select at least one player above to display the scorecard.';
     box.appendChild(note);
+  }else{
+    updateRoundTotals();
   }
 }
 
@@ -249,7 +275,7 @@ function renderRounds(){
   savedRounds.forEach(r=>{
     const d=document.createElement('div'); d.className='saved-round';
     const title=document.createElement('div'); title.className='saved-round-title'; title.textContent=r.name+' • '+(r.holes||r.players?.[0]?.scores?.length||0)+' holes';
-    const score=document.createElement('div'); score.className='saved-round-score'; score.textContent=(r.players||[]).map(p=>p.name+': '+p.total).join(' • ');
+    const score=document.createElement('div'); score.className='saved-round-score'; score.textContent=(r.players||[]).map(p=>{const d=Number.isFinite(p.vsPar)?p.vsPar:((p.total||0)-(p.parTotal||0));return p.name+': '+p.total+' ('+(d===0?'Even':(d>0?'+'+d:d))+' vs par)'}).join(' • ');
     const pars=Array.isArray(r.pars)?r.pars:[];
     const detail=document.createElement('div'); detail.className='saved-round-detail'; detail.innerHTML='Par: '+(pars.length?pars.map((v,i)=>'H'+(i+1)+': '+v).join(', '):'—')+'<br>'+(r.players||[]).map(p=>p.name+' — '+p.scores.map((s,i)=>'H'+(i+1)+': '+(s||'—')).join(', ')).join('<br>');
     d.append(title,score,detail); box.appendChild(d);
@@ -357,7 +383,9 @@ function init(){
     const roundPlayers=ids.map(id=>{
       const p=players.find(x=>x.id===id);
       const scores=inputsIn($('#roundScores'),'.round-score[data-player="'+id+'"]').map(x=>x.value);
-      return{name:p?.name||'Player',scores,total:scores.reduce((a,v)=>a+(Number(v)||0),0)}
+      const total=scores.reduce((a,v)=>a+(Number(v)||0),0);
+      const parTotal=pars.reduce((a,v)=>a+v,0);
+      return{name:p?.name||'Player',scores,total,parTotal,vsPar:total-parTotal}
     });
     savedRounds.unshift({name:$('#roundName').value.trim()||'Unnamed Round',holes:roundHoles,pars,players:roundPlayers});
     savedRounds=savedRounds.slice(0,20);localStorage.setItem('tinyRounds',JSON.stringify(savedRounds));
