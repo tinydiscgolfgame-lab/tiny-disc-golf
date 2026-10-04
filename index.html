@@ -128,12 +128,13 @@ function loadPlayers(){
   try{
     const old=JSON.parse(localStorage.getItem('tinyPass')||'null');
     const pass=old&&typeof old==='object'?old:{};
+    if(!pass.rating)pass.rating='800';
     const first={id:'p'+Date.now(),name:(pass.playerName||'Player 1').trim()||'Player 1',pass};
     players=[first];
     activePlayerId=first.id;
     loadPass(pass);
   }catch(e){
-    players=[{id:'p'+Date.now(),name:'Player 1',pass:{playerName:'Player 1'}}];
+    players=[{id:'p'+Date.now(),name:'Player 1',pass:{playerName:'Player 1',rating:'800'}}];
     activePlayerId=players[0].id;
     loadPass(players[0].pass);
   }
@@ -283,7 +284,7 @@ function addNewPlayer(){
   if(!name||!name.trim())return;
   const current=players.find(x=>x.id===activePlayerId);
   if(current)current.pass=getPass();
-  const p={id:'p'+Date.now()+Math.random().toString(36).slice(2,8),name:name.trim(),pass:{version:4,playerName:name.trim(),bag:[],accessories:[]}};
+  const p={id:'p'+Date.now()+Math.random().toString(36).slice(2,8),name:name.trim(),pass:{version:4,playerName:name.trim(),rating:'800',bag:[],accessories:[]}};
   players.push(p);
   activePlayerId=p.id;
   loadPass(p.pass);
@@ -381,11 +382,23 @@ function init(){
       const scores=inputsIn($('#roundScores'),'.round-score[data-player="'+id+'"]').map(x=>x.value);
       const total=scores.reduce((a,v)=>a+(Number(v)||0),0);
       const parTotal=pars.reduce((a,v)=>a+v,0);
-      return{name:p?.name||'Player',scores,vsPar:total-parTotal}
+      const vsPar=total-parTotal;
+      const currentRating=Number(p?.pass?.rating)||800;
+      const newRating=currentRating-vsPar;
+      if(p){
+        p.pass=p.pass||{};
+        p.pass.rating=String(newRating);
+      }
+      return{name:p?.name||'Player',scores,vsPar,rating:newRating}
     });
     savedRounds.unshift({name:$('#roundName').value.trim()||'Unnamed Round',holes:roundHoles,pars,players:roundPlayers});
-    savedRounds=savedRounds.slice(0,20);localStorage.setItem('tinyRounds',JSON.stringify(savedRounds));
+    savedRounds=savedRounds.slice(0,20);
+    localStorage.setItem('tinyRounds',JSON.stringify(savedRounds));
+    const activeRoundPlayer=players.find(x=>x.id===activePlayerId);
+    if(activeRoundPlayer) localStorage.setItem('tinyPass',JSON.stringify(activeRoundPlayer.pass||{}));
+    localStorage.setItem('tinyPlayers',JSON.stringify(players));
     renderRounds();$('#roundName').value='';renderRoundPlayers();
+    loadPass(activeRoundPlayer?.pass||{});renderPlayers();
   });
 
   $('#downloadBtn').addEventListener('click',()=>{
