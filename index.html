@@ -446,7 +446,7 @@ function init(){
   $('#addDisc').addEventListener('click',()=>{addDisc();savePlayers()});
   $('#addAccessory').addEventListener('click',()=>{addAccessory();savePlayers()});
 
-  $('[data-key]').forEach(x=>{
+  document.querySelectorAll('[data-key]').forEach(x=>{
     x.addEventListener('input',savePlayers);
     x.addEventListener('change',savePlayers);
   });
