@@ -37,7 +37,7 @@ let activePlayerId=null;
 
 function getPass(){
   const d={version:4,savedAt:new Date().toISOString()};
-  $$('[data-key]').forEach(x=>d[x.dataset.key]=x.value);
+  $('[data-key]').forEach(x=>d[x.dataset.key]=x.value);
   d.bag=Array.from($('#bag .disc-row')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
   d.accessories=Array.from($('#accessories .field')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
   return d;
@@ -45,15 +45,26 @@ function getPass(){
 function inputsIn(parent,selector){
   return Array.from(parent.querySelectorAll(selector));
 }
+function normalizeRows(value,width){
+  if(!Array.isArray(value)||!value.length)return [];
+  if(Array.isArray(value[0])) return value.map(row=>Array.isArray(row)?row.slice(0,width):[row]);
+  const rows=[];
+  for(let i=0;i<value.length;i+=width) rows.push(value.slice(i,i+width));
+  return rows;
+}
+function persistCurrentPlayer(){
+  const p=players.find(x=>x.id===activePlayerId);
+  if(!p)return null;
+  const pass=getPass();
+  p.pass=JSON.parse(JSON.stringify(pass));
+  p.name=(pass.playerName||'').trim()||p.name||'Player';
+  localStorage.setItem('tinyPlayers',JSON.stringify(players));
+  localStorage.setItem('tinyPass',JSON.stringify(p.pass));
+  return p;
+}
 function savePlayers(){
   try{
-    const p=players.find(x=>x.id===activePlayerId);
-    if(p){
-      p.pass=getPass();
-      p.name=(p.pass.playerName||'').trim()||p.name||'Player';
-    }
-    localStorage.setItem('tinyPlayers',JSON.stringify(players));
-    if(p) localStorage.setItem('tinyPass',JSON.stringify(p.pass));
+    const p=persistCurrentPlayer();
     const status=$('#saveStatus');
     if(status) status.textContent='Saved automatically • '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
     renderPlayers();
@@ -78,16 +89,16 @@ function addAccessory(vals=[]){
   inputsIn(r,'input').forEach(x=>x.addEventListener('input',savePlayers));
 }
 function loadPass(d={}){
-  $$('[data-key]').forEach(x=>x.value=d[x.dataset.key]||'');
+  d=(d&&typeof d==='object')?d:{};
+  $('[data-key]').forEach(x=>x.value=d[x.dataset.key]??'');
   const bag=$('#bag'), acc=$('#accessories');
   bag.innerHTML='';
   acc.innerHTML='';
-  let bv=Array.isArray(d.bag)?d.bag:[], av=Array.isArray(d.accessories)?d.accessories:[];
-  if(bv.length && typeof bv[0]==='string') bv=[bv];
-  if(av.length && typeof av[0]==='string') av=[av];
-  if(bv.length) bv.forEach(v=>addDisc(Array.isArray(v)?v:[v]));
+  const bv=normalizeRows(d.bag,5);
+  const av=normalizeRows(d.accessories,2);
+  if(bv.length) bv.forEach(v=>addDisc(v));
   else for(let i=0;i<12;i++) addDisc();
-  if(av.length) av.forEach(v=>addAccessory(Array.isArray(v)?v:[v]));
+  if(av.length) av.forEach(v=>addAccessory(v));
   else for(let i=0;i<6;i++) addAccessory();
 }
 function renderPlayers(){
@@ -103,8 +114,8 @@ function renderPlayers(){
   });
 }
 function switchPlayer(id){
-  const current=players.find(x=>x.id===activePlayerId);
-  if(current) current.pass=getPass();
+  if(id===activePlayerId)return;
+  persistCurrentPlayer();
   const next=players.find(x=>x.id===id);
   if(!next)return;
   activePlayerId=id;
@@ -379,8 +390,7 @@ function renderRounds(){
 function addNewPlayer(){
   const name=window.prompt('Player name:');
   if(!name||!name.trim())return;
-  const current=players.find(x=>x.id===activePlayerId);
-  if(current)current.pass=getPass();
+  persistCurrentPlayer();
   const p={id:'p'+Date.now()+Math.random().toString(36).slice(2,8),name:name.trim(),pass:{version:4,playerName:name.trim(),rating:'800',bag:[],accessories:[]}};
   players.push(p);
   activePlayerId=p.id;
