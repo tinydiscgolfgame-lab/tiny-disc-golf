@@ -90,7 +90,11 @@ function addAccessory(vals=[]){
   r.innerHTML='<input class="input" placeholder="Gear item"><input class="input" placeholder="Modifier">';
   inputsIn(r,'input').forEach((x,i)=>x.value=vals[i]||'');
   acc.appendChild(r);
-  inputsIn(r,'input').forEach(x=>x.addEventListener('input',savePlayers));
+  inputsIn(r,'input').forEach(x=>{
+    x.addEventListener('input',savePlayers);
+    x.addEventListener('change',savePlayers);
+    x.addEventListener('blur',savePlayers);
+  });
 }
 function loadPass(d={}){
   d=(d&&typeof d==='object')?d:{};
