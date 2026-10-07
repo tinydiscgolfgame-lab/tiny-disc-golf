@@ -37,7 +37,7 @@ let activePlayerId=null;
 
 function getPass(){
   const d={version:4,savedAt:new Date().toISOString()};
-  $('[data-key]').forEach(x=>d[x.dataset.key]=x.value);
+  $$('[data-key]').forEach(x=>d[x.dataset.key]=x.value);
   d.bag=Array.from($('#bag .disc-row')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
   d.accessories=Array.from($('#accessories .field')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
   return d;
@@ -90,7 +90,7 @@ function addAccessory(vals=[]){
 }
 function loadPass(d={}){
   d=(d&&typeof d==='object')?d:{};
-  $('[data-key]').forEach(x=>x.value=d[x.dataset.key]??'');
+  $$('[data-key]').forEach(x=>x.value=d[x.dataset.key]??'');
   const bag=$('#bag'), acc=$('#accessories');
   bag.innerHTML='';
   acc.innerHTML='';
