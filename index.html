@@ -38,8 +38,8 @@ let activePlayerId=null;
 function getPass(){
   const d={version:4,savedAt:new Date().toISOString()};
   $$('[data-key]').forEach(x=>d[x.dataset.key]=x.value);
-  d.bag=Array.from($('#bag .disc-row')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
-  d.accessories=Array.from($('#accessories .field')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
+  d.bag=Array.from($('#bag').querySelectorAll(':scope > .disc-row')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
+  d.accessories=Array.from($('#accessories').querySelectorAll(':scope > .field')).map(r=>Array.from(r.querySelectorAll('input')).map(x=>x.value));
   return d;
 }
 function inputsIn(parent,selector){
@@ -77,7 +77,11 @@ function addDisc(vals=[]){
   r.innerHTML='<input placeholder="Disc"><input type="number" inputmode="decimal" min="0" step="0.1" placeholder="Speed"><input type="number" inputmode="decimal" min="0" step="0.1" placeholder="Glide"><input type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Turn"><input type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Fade">';
   inputsIn(r,'input').forEach((x,i)=>x.value=vals[i]||'');
   bag.appendChild(r);
-  inputsIn(r,'input').forEach(x=>x.addEventListener('input',savePlayers));
+  inputsIn(r,'input').forEach(x=>{
+    x.addEventListener('input',savePlayers);
+    x.addEventListener('change',savePlayers);
+    x.addEventListener('blur',savePlayers);
+  });
 }
 function addAccessory(vals=[]){
   const acc=$('#accessories');
@@ -413,8 +417,8 @@ function removeCurrentPlayer(){
   savePlayers();
 }
 function changeCurrentPlayer(id){
-  const current=players.find(x=>x.id===activePlayerId);
-  if(current)current.pass=getPass();
+  if(id===activePlayerId)return;
+  persistCurrentPlayer();
   const next=players.find(x=>x.id===id);
   if(!next)return;
   activePlayerId=next.id;
@@ -438,7 +442,11 @@ function init(){
   $('#addDisc').addEventListener('click',()=>{addDisc();savePlayers()});
   $('#addAccessory').addEventListener('click',()=>{addAccessory();savePlayers()});
 
-  $$('[data-key]').forEach(x=>x.addEventListener('input',savePlayers));
+  $('[data-key]').forEach(x=>{
+    x.addEventListener('input',savePlayers);
+    x.addEventListener('change',savePlayers);
+  });
+  window.addEventListener('pagehide',()=>{try{persistCurrentPlayer()}catch(e){console.error(e)}});
 
   let rollHistory=[],finalHistory=[],currentRoll=null;
   function getCurrentFinal(){
