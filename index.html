@@ -611,10 +611,10 @@ function formatPuttingNumber(value){
 document.addEventListener('input',e=>{
   if(e.target?.id==='puttingInches'||e.target?.matches?.('[data-key="putting"]'))renderPutting();
   if(e.target?.matches?.('[data-key="control"]'))renderControlCalculator();
-  if(e.target?.matches?.('[data-key="control"]'))renderControlCalculator();
 });
 document.addEventListener('change',e=>{
   if(e.target?.id==='puttingInches'||e.target?.matches?.('[data-key="putting"]'))renderPutting();
+  if(e.target?.matches?.('[data-key="control"]'))renderControlCalculator();
 });
 document.addEventListener('click',e=>{
   if(e.target?.closest?.('[data-tab="putting"]'))renderPutting();
