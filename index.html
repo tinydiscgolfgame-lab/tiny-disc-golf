@@ -572,7 +572,7 @@ function renderControlCalculator(){
     let target='—',resultClass='distance-result';
     if(!validControl){target='Enter Control';}
     else if(speedText===''||!Number.isFinite(speed)){target='Enter Speed';resultClass='cannot-throw';}
-    else{const value=(control-speed)*5;target=(value>0?'+':'')+value+'%';}
+    else{const value=Math.max(0,(control-speed)*5);target=value+'%';}
     const tr=document.createElement('tr');
     tr.innerHTML='<td>'+escapeDistanceHtml(name)+'</td><td>'+(speedText?escapeDistanceHtml(speedText):'—')+'</td><td class="'+resultClass+'">'+escapeDistanceHtml(target)+'</td>';
     rows.appendChild(tr);
