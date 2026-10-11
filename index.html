@@ -770,5 +770,24 @@ function init(){
 
   loadPlayers();renderPlayers();renderRoundPlayers();renderRounds();renderCourses();renderCourseEditor();
 }
-document.addEventListener('DOMContentLoaded',init);
+let tinyAppInitialized=false;
+function startTinyApp(){
+  if(tinyAppInitialized)return;
+  tinyAppInitialized=true;
+  try{init()}catch(err){
+    console.error('Tiny Disc Golf startup failed:',err);
+    const status=document.querySelector('#saveStatus');
+    if(status)status.textContent='App startup error: '+(err?.message||'unknown error');
+  }
+}
+document.addEventListener('click',e=>{
+  const btn=e.target?.closest?.('.tab');
+  if(!btn)return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===btn));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.tab));
+  if(btn.dataset.tab==='control')renderControlCalculator();
+  if(btn.dataset.tab==='putting')renderPutting();
+});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startTinyApp,{once:true});
+else startTinyApp();
 </script></body></html>
