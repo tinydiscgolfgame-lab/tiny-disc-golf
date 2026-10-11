@@ -623,7 +623,7 @@ document.addEventListener('click',e=>{
 function init(){
   renderPutting();
   renderControlCalculator();
-  $('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+  $$('.tab').forEach(btn=>btn.addEventListener('click',()=>{
     $$('.tab').forEach(x=>x.classList.remove('active'));
     $$('.panel').forEach(x=>x.classList.remove('active'));
     btn.classList.add('active');
