@@ -48,6 +48,7 @@
 <div class="field"><span>Inches Away:</span><input class="input" id="puttingInches" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0"></div>
 <div class="result" id="puttingBaseTarget">Base Putting Target: —</div>
 <div class="calc-final">Final Putting Target Number: <strong id="puttingFinalTarget">—</strong></div>
+<div class="calc"><h3>Putting Target Modifiers</h3><div class="note">Add bonuses or penalties to adjust the Final Putting Target Number.</div><div id="puttingModifierList" class="modifier-list"></div><button type="button" class="secondary" id="addPuttingModifier">+ Add Modifier</button><button type="button" class="secondary" id="resetPuttingModifiers" style="margin-top:7px">Reset Modifiers</button><p class="note">Tap + or − for each modifier, then enter its value.</p></div>
 </div>
 </div>
 <div class="tool" style="margin-top:12px">
@@ -599,9 +600,35 @@ function renderPutting(){
     return;
   }
   const base=100-(inches*10);
-  const finalTarget=validStat?base+modifier:base;
+  const statAdjusted=validStat?base+modifier:base;
+  const modifierList=document.querySelector('#puttingModifierList');
+  let extra=0;
+  if(modifierList)modifierList.querySelectorAll('.modifier-row').forEach(r=>{
+    const v=Number(r.querySelector('.modifier-value')?.value)||0;
+    extra+=(r.dataset.op==='subtract'?-v:v);
+  });
+  const finalTarget=statAdjusted+extra;
   if(baseEl)baseEl.textContent='Base Putting Target: '+formatPuttingNumber(base);
   if(finalEl)finalEl.textContent=formatPuttingNumber(finalTarget);
+}
+function addPuttingModifierRow(value='',op='add'){
+  const list=document.querySelector('#puttingModifierList');
+  if(!list)return;
+  const r=document.createElement('div');
+  r.className='modifier-row';
+  r.dataset.op=op;
+  r.innerHTML='<button type="button" class="modifier-op">'+(op==='subtract'?'−':'+')+'</button><input class="input modifier-value" type="number" inputmode="numeric" value="'+value+'" placeholder="0"><button type="button" class="modifier-remove">×</button>';
+  list.appendChild(r);
+  r.querySelector('.modifier-op').addEventListener('click',()=>{
+    r.dataset.op=r.dataset.op==='subtract'?'add':'subtract';
+    r.querySelector('.modifier-op').textContent=r.dataset.op==='subtract'?'−':'+';
+    renderPutting();
+  });
+  r.querySelector('.modifier-value').addEventListener('input',renderPutting);
+  r.querySelector('.modifier-remove').addEventListener('click',()=>{
+    if(list.children.length>1){r.remove();renderPutting();}
+  });
+  renderPutting();
 }
 function formatPuttingNumber(value){
   return Number.isInteger(value)?String(value):String(Number(value.toFixed(1)));
@@ -621,6 +648,9 @@ document.addEventListener('click',e=>{
   if(e.target?.closest?.('[data-tab="control"]'))renderControlCalculator();
 });
 function init(){
+  addPuttingModifierRow();
+  $('#addPuttingModifier').addEventListener('click',()=>addPuttingModifierRow());
+  $('#resetPuttingModifiers').addEventListener('click',()=>{ $('#puttingModifierList').innerHTML=''; addPuttingModifierRow(); });
   renderPutting();
   renderControlCalculator();
   $$('.tab').forEach(btn=>btn.addEventListener('click',()=>{
