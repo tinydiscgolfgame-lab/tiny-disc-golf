@@ -1,0 +1,61 @@
+name: Add Putting tab
+
+on:
+  push:
+    branches: [main]
+    paths: ['.putting-tab-trigger']
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.head_commit.message == 'Trigger Putting tab patch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch Putting tab
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text()
+
+          # Add the seventh tab.
+          old='<button class="tab" data-tab="distance">Distance</button>'
+          new=old+'<button class="tab" data-tab="putting">Putting</button>'
+          if 'data-tab="putting"' not in s:
+              if old not in s: raise SystemExit('Distance tab marker not found')
+              s=s.replace(old,new,1)
+
+          # Add the Putting panel immediately before the footer, after the existing panels.
+          panel='''<section id="putting" class="panel">\n<div class="tools">\n<div class="tool">\n<h3>Putting Stat Modifier</h3>\n<div class="note">A Putting stat of 10 gives a 0% modifier. Each point above 10 adds 5%; each point below 10 subtracts 5%.</div>\n<div class="big" id="puttingModifier">—</div>\n<div class="result" id="puttingStatDisplay">Putting Stat: —</div>\n</div>\n<div class="tool">\n<h3>Inches To Basket</h3>\n<div class="note">For every 0.1 inch away from the basket, the Putting Target Number decreases by 1. The Putting Stat Modifier is then added to the target number.</div>\n<div class="field"><span>Inches Away:</span><input class="input" id="puttingInches" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0"></div>\n<div class="result" id="puttingBaseTarget">Base Putting Target: —</div>\n<div class="calc-final">Final Putting Target Number: <strong id="puttingFinalTarget">—</strong></div>\n</div>\n</div>\n<div class="tool" style="margin-top:12px">\n<div class="note"><strong>Putting Target Equation:</strong> (100 − 1 per 0.1 inches) + Putting Stat Modifier</div>\n</div>\n</section>\n'''
+          if 'id="putting" class="panel"' not in s:
+              marker='<div class="footer">'
+              if marker not in s: raise SystemExit('Footer marker not found')
+              s=s.replace(marker,panel+marker,1)
+
+          # Add calculator logic before the existing init function.
+          js='''\nfunction renderPutting(){\n  const puttingEl=document.querySelector('[data-key="putting"]');\n  const stat=Number(puttingEl?.value);\n  const validStat=Number.isFinite(stat)&&puttingEl?.value.trim()!=='';\n  const modifier=validStat?(stat-10)*5:null;\n  const modEl=document.querySelector('#puttingModifier');\n  const statEl=document.querySelector('#puttingStatDisplay');\n  const inchesEl=document.querySelector('#puttingInches');\n  const baseEl=document.querySelector('#puttingBaseTarget');\n  const finalEl=document.querySelector('#puttingFinalTarget');\n  if(modEl)modEl.textContent=validStat?((modifier>0?'+':'')+modifier+'%'):'—';\n  if(statEl)statEl.textContent=validStat?'Putting Stat: '+stat:'Putting Stat: —';\n  const inches=Number(inchesEl?.value);\n  const validInches=Number.isFinite(inches)&&inchesEl?.value.trim()!==''&&inches>=0;\n  if(!validInches){\n    if(baseEl)baseEl.textContent='Base Putting Target: —';\n    if(finalEl)finalEl.textContent='—';\n    return;\n  }\n  const base=100-(inches*10);\n  const finalTarget=validStat?base+modifier:base;\n  if(baseEl)baseEl.textContent='Base Putting Target: '+formatPuttingNumber(base);\n  if(finalEl)finalEl.textContent=formatPuttingNumber(finalTarget);\n}\nfunction formatPuttingNumber(value){\n  return Number.isInteger(value)?String(value):String(Number(value.toFixed(1)));\n}\n\n'''
+          if 'function renderPutting()' not in s:
+              marker='function init()'
+              if marker not in s: raise SystemExit('init marker not found')
+              s=s.replace(marker,js+marker,1)
+
+          # Add listeners without disturbing the existing tab/input logic.
+          listeners='''\ndocument.addEventListener('input',e=>{\n  if(e.target?.id==='puttingInches'||e.target?.matches?.('[data-key="putting"]'))renderPutting();\n});\ndocument.addEventListener('change',e=>{\n  if(e.target?.id==='puttingInches'||e.target?.matches?.('[data-key="putting"]'))renderPutting();\n});\ndocument.addEventListener('click',e=>{\n  if(e.target?.closest?.('[data-tab="putting"]'))renderPutting();\n});\n'''
+          if "[data-tab=\"putting\"]" not in s:
+              marker='function init()'
+              s=s.replace(marker,listeners+marker,1)
+
+          # Update the tab grid for the seventh desktop tab while retaining the existing mobile 2-column layout.
+          s=s.replace('.tabs{display:grid;grid-template-columns:repeat(6,1fr);', '.tabs{display:grid;grid-template-columns:repeat(7,1fr);', 1)
+          s=s.replace('function init(){', 'function init(){\n  renderPutting();', 1)
+          p.write_text(s)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Add Putting tab and calculator"
+          git push
