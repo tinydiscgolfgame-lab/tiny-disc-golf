@@ -1,0 +1,46 @@
+name: Reorder Tiny Disc Golf Tabs
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  reorder-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Swap Modifiers and TDGA tabs
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<button class="tab" data-tab="putting">Putting</button><button class="tab" data-tab="tdga">TDGA</button><button class="tab" data-tab="modifiers">Modifiers</button>'
+          new = '<button class="tab" data-tab="putting">Putting</button><button class="tab" data-tab="modifiers">Modifiers</button><button class="tab" data-tab="tdga">TDGA</button>'
+          if old not in s:
+              raise SystemExit('Expected tab order not found; refusing to change anything.')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+      - name: Commit reordered tabs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Put TDGA after Modifiers"
+          git push
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
