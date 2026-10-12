@@ -51,11 +51,18 @@ jobs:
               s=s.replace("$('#rolls').textContent=rollHistory.join(' • ');$('#finalHistory').textContent=finalHistory.length?finalHistory.join(' • '):'—';updateCalc();","$('#rolls').textContent=rollHistory.join(' • ');$('#finalHistory').textContent=finalHistory.length?finalHistory.join(' • '):'—';updateCalc();const outcome=$('#rollOutcome');if(outcome)outcome.textContent=currentRoll===1?'ACE / FIELD ACE! — spectacular success!':(currentRoll===100?'COMPLETE FAILURE! — determine the normal miss and double it.':'');",1)
               s=s.replace('  addModifierRow();\n\n  const dirs=', '  addModifierRow();\n  renderQuickModifiers();\n\n  const dirs=',1)
               p.write_text(s,encoding='utf-8')
+          # Keep the existing Modifiers feature current after it has been installed.
+          s=p.read_text(encoding='utf-8')
+          old_large='<div class="modifier-card"><strong>Large Tree / Boulder / Obstacle — −20% to −40% each</strong><span>Choose the penalty based on how much the obstacle blocks the throwing lane.</span></div>'
+          new_large='<div class="modifier-card"><strong>Large Tree / Boulder / Obstacle — −20% each</strong><span>Apply a −20% penalty for each large obstacle.</span></div><div class="modifier-card"><strong>Extra Large Tree / Boulder / Obstacle — −40% each</strong><span>Apply a −40% penalty for each extra large obstacle.</span></div>'
+          s=s.replace(old_large,new_large)
+          s=s.replace("{id:'large-obstacle',label:'Large Obstacle',short:'−20 to −40',value:-20}","{id:'large-obstacle',label:'Large Obstacle',short:'−20',value:-20},{id:'extra-large-obstacle',label:'Extra Large Obstacle',short:'−40',value:-40}")
+          p.write_text(s,encoding='utf-8')
       - name: Commit patched app
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- index.html; then echo "No app patch needed"; else git add index.html && git commit -m "Add Modifiers tab and clickable roll modifiers" && git push; fi
+          if git diff --quiet -- index.html; then echo "No app patch needed"; else git add index.html && git commit -m "Update tree obstacle modifiers" && git push; fi
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload site
