@@ -30,24 +30,22 @@ jobs:
           if not bi:
               raise SystemExit('Bundle text not found in TDGA section')
           print('Bundle context before update:')
-          print(re.sub(r'\s+',' ',sec[max(0,bi.start()-500):min(len(sec),bi.start()+1500)]))
-          tail=sec[bi.start():]
-          pm=re.search(r'<p[^>]*>[\s\S]*?</p>',tail,re.I)
+          print(re.sub(r'\s+',' ',sec[max(0,bi.start()-800):min(len(sec),bi.start()+2500)]))
+          # Replace the first paragraph following the Bundle label.
+          tail=sec[bi.end():]
+          pm=re.search(r'<p\b[^>]*>[\s\S]*?</p>',tail,re.I)
           if not pm:
               raise SystemExit('Bundle paragraph not found')
-          a=bi.start()+pm.start(); b=bi.start()+pm.end()
-          sec=sec[:a]+ '<p>'+new_text+'</p>' +sec[b:]
-          # Prefer the first PayPal/button link after the Bundle heading; otherwise the first link/button after it.
-          tail=sec[bi.start():]
+          a=bi.end()+pm.start(); b=bi.end()+pm.end()
+          sec=sec[:a]+'<p>'+new_text+'</p>'+sec[b:]
+          # Replace the first href/onclick link after the Bundle label.
+          tail=sec[bi.end():]
           lm=re.search(r'<(?:a|button)\b[^>]*(?:href|onclick)=["\'][^"\']*["\'][^>]*>',tail,re.I)
           if not lm:
               raise SystemExit('Bundle button/link not found')
           tag=lm.group(0)
-          if re.search(r'(paypal|buy|bundle|order|purchase)',tag,re.I):
-              newtag=re.sub(r'(href|onclick)=["\'][^"\']*["\']',lambda x:x.group(1)+'="'+new_url+'"',tag,count=1,flags=re.I)
-          else:
-              newtag=re.sub(r'(href|onclick)=["\'][^"\']*["\']',lambda x:x.group(1)+'="'+new_url+'"',tag,count=1,flags=re.I)
-          sec=sec[:bi.start()+lm.start()]+newtag+sec[bi.start()+lm.end():]
+          newtag=re.sub(r'(href|onclick)=["\'][^"\']*["\']',lambda x:x.group(1)+'="'+new_url+'"',tag,count=1,flags=re.I)
+          sec=sec[:bi.end()+lm.start()]+newtag+sec[bi.end()+lm.end():]
           s=s[:m.start()]+sec+s[m.end():]
           p.write_text(s,encoding='utf-8')
           print('Bundle updated.')
