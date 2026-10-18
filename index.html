@@ -58,7 +58,6 @@
 </section>
 <section id="tdga" class="panel">
 <div class="tools">
-<div class="tool" style="grid-column:1/-1"><h3>TDGA Global Leaderboard</h3><p class="note">Highest TDGA Ranking appears first. Submissions are reviewed before they appear publicly.</p><button class="secondary" type="button" id="refreshLeaderboard">Refresh Leaderboard</button><div id="globalLeaderboardStatus" class="save-status">Loading approved rankings…</div><div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:8px">Rank</th><th style="text-align:left;padding:8px">Player</th><th style="text-align:right;padding:8px">TDGA Ranking</th></tr></thead><tbody id="globalLeaderboardRows"><tr><td colspan="3">Loading…</td></tr></tbody></table></div><div class="calc"><h3>Submit Your Ranking</h3><p class="note">Your Player’s Pass Name and Rating can be used below. Submissions must be approved before they appear on the leaderboard.</p><form id="leaderboardSubmitForm" method="post" action="https://script.google.com/macros/s/AKfycbxbdYhfTh1oWohyRj5JUcNVt6TYUYTryBNYYt8AY0x7aXm9GzLOGej77TW5NKIYODmljA/exec" target="leaderboardSubmitFrame"><div class="field"><label for="leaderboardPlayerName">Player Name:</label><input class="input" id="leaderboardPlayerName" name="playerName" maxlength="50" required></div><div class="field"><label for="leaderboardRanking">TDGA Ranking:</label><input class="input" id="leaderboardRanking" name="ranking" type="number" min="0" max="1000" step="any" required></div><button class="primary" type="submit">Submit Ranking for Approval</button></form><iframe name="leaderboardSubmitFrame" id="leaderboardSubmitFrame" style="display:none"></iframe><div id="leaderboardSubmitStatus" class="save-status" aria-live="polite"></div></div></div>
 <div class="tool">
 <h3>Buy The Game!</h3>
 <p class="note">Get the Tiny Disc Golf rulebook.</p>
@@ -80,39 +79,7 @@
 <script>
 const $=s=>document.querySelector(s);
 // Save/load and autosave initialization.
-const $=s=>Array.from(document.querySelectorAll(s));
-const TDGA_LEADERBOARD_ENDPOINT="https://script.google.com/macros/s/AKfycbxbdYhfTh1oWohyRj5JUcNVt6TYUYTryBNYYt8AY0x7aXm9GzLOGej77TW5NKIYODmljA/exec";
-async function loadTDGALeaderboard(){
-  const status=$('#globalLeaderboardStatus'), body=$('#globalLeaderboardRows');
-  if(!status||!body)return;
-  status.textContent='Loading approved rankings…';
-  try{
-    const response=await fetch(TDGA_LEADERBOARD_ENDPOINT+'?action=leaderboard&cb='+Date.now(),{method:'GET',cache:'no-store'});
-    if(!response.ok)throw new Error('Request failed');
-    const data=await response.json();
-    if(data.ok!==true||!Array.isArray(data.players))throw new Error('Invalid response');
-    const list=data.players.slice().sort((a,b)=>Number(b.ranking)-Number(a.ranking)||String(a.name).localeCompare(String(b.name)));
-    body.innerHTML='';
-    if(!list.length)body.innerHTML='<tr><td colspan="3" class="note" style="padding:10px">No approved rankings yet. Be the first to submit one!</td></tr>';
-    list.forEach((p,i)=>{
-      const tr=document.createElement('tr');
-      [String(i+1),String(p.name||'Player'),String(p.ranking)].forEach((value,j)=>{
-        const td=document.createElement('td');td.textContent=value;td.style.padding='9px';td.style.borderBottom='1px solid var(--line)';td.style.textAlign=j===2?'right':'left';tr.appendChild(td);
-      });
-      body.appendChild(tr);
-    });
-    status.textContent=list.length+' approved '+(list.length===1?'player':'players')+' • highest ranking first';
-  }catch(error){
-    status.textContent='Could not load leaderboard. Confirm the Apps Script deployment allows Anyone to access it.';
-    body.innerHTML='<tr><td colspan="3" class="note" style="padding:10px">Leaderboard unavailable.</td></tr>';
-  }
-}
-function prefillTDGASubmission(){
-  const pass=getPass(), name=$('#leaderboardPlayerName'), ranking=$('#leaderboardRanking');
-  if(name&&!name.value.trim())name.value=String(pass.playerName||'').trim();
-  if(ranking&&!ranking.value.trim()&&String(pass.rating||'').trim())ranking.value=String(pass.rating).trim();
-}
-
+const $$=s=>Array.from(document.querySelectorAll(s));
 
 let players=[];
 let activePlayerId=null;
@@ -693,19 +660,9 @@ function init(){
     $$('.panel').forEach(x=>x.classList.remove('active'));
     btn.classList.add('active');
     $('#'+btn.dataset.tab).classList.add('active');
-    if(btn.dataset.tab==='tdga'){prefillTDGASubmission();loadTDGALeaderboard();}
-
   }));
 
   $('#activePlayer').onchange=e=>changeCurrentPlayer(e.target.value);
-  $('#refreshLeaderboard')?.addEventListener('click',loadTDGALeaderboard);
-  $('#leaderboardSubmitForm')?.addEventListener('submit',()=>{
-    prefillTDGASubmission();
-    const status=$('#leaderboardSubmitStatus');
-    if(status)status.textContent='Submission sent for review. It will appear publicly after approval.';
-  });
-  loadTDGALeaderboard();
-
   renderDistanceCalculator();
   renderControlCalculator();
   $('#addPlayer').onclick=addNewPlayer;
