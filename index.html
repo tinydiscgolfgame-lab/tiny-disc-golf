@@ -80,7 +80,39 @@
 <script>
 const $=s=>document.querySelector(s);
 // Save/load and autosave initialization.
-const $$=s=>Array.from(document.querySelectorAll(s));
+const $=s=>Array.from(document.querySelectorAll(s));
+const TDGA_LEADERBOARD_ENDPOINT="https://script.google.com/macros/s/AKfycbxbdYhfTh1oWohyRj5JUcNVt6TYUYTryBNYYt8AY0x7aXm9GzLOGej77TW5NKIYODmljA/exec";
+async function loadTDGALeaderboard(){
+  const status=$('#globalLeaderboardStatus'), body=$('#globalLeaderboardRows');
+  if(!status||!body)return;
+  status.textContent='Loading approved rankings…';
+  try{
+    const response=await fetch(TDGA_LEADERBOARD_ENDPOINT+'?action=leaderboard&cb='+Date.now(),{method:'GET',cache:'no-store'});
+    if(!response.ok)throw new Error('Request failed');
+    const data=await response.json();
+    if(data.ok!==true||!Array.isArray(data.players))throw new Error('Invalid response');
+    const list=data.players.slice().sort((a,b)=>Number(b.ranking)-Number(a.ranking)||String(a.name).localeCompare(String(b.name)));
+    body.innerHTML='';
+    if(!list.length)body.innerHTML='<tr><td colspan="3" class="note" style="padding:10px">No approved rankings yet. Be the first to submit one!</td></tr>';
+    list.forEach((p,i)=>{
+      const tr=document.createElement('tr');
+      [String(i+1),String(p.name||'Player'),String(p.ranking)].forEach((value,j)=>{
+        const td=document.createElement('td');td.textContent=value;td.style.padding='9px';td.style.borderBottom='1px solid var(--line)';td.style.textAlign=j===2?'right':'left';tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+    status.textContent=list.length+' approved '+(list.length===1?'player':'players')+' • highest ranking first';
+  }catch(error){
+    status.textContent='Could not load leaderboard. Confirm the Apps Script deployment allows Anyone to access it.';
+    body.innerHTML='<tr><td colspan="3" class="note" style="padding:10px">Leaderboard unavailable.</td></tr>';
+  }
+}
+function prefillTDGASubmission(){
+  const pass=getPass(), name=$('#leaderboardPlayerName'), ranking=$('#leaderboardRanking');
+  if(name&&!name.value.trim())name.value=String(pass.playerName||'').trim();
+  if(ranking&&!ranking.value.trim()&&String(pass.rating||'').trim())ranking.value=String(pass.rating).trim();
+}
+
 
 let players=[];
 let activePlayerId=null;
@@ -661,9 +693,19 @@ function init(){
     $$('.panel').forEach(x=>x.classList.remove('active'));
     btn.classList.add('active');
     $('#'+btn.dataset.tab).classList.add('active');
+    if(btn.dataset.tab==='tdga'){prefillTDGASubmission();loadTDGALeaderboard();}
+
   }));
 
   $('#activePlayer').onchange=e=>changeCurrentPlayer(e.target.value);
+  $('#refreshLeaderboard')?.addEventListener('click',loadTDGALeaderboard);
+  $('#leaderboardSubmitForm')?.addEventListener('submit',()=>{
+    prefillTDGASubmission();
+    const status=$('#leaderboardSubmitStatus');
+    if(status)status.textContent='Submission sent for review. It will appear publicly after approval.';
+  });
+  loadTDGALeaderboard();
+
   renderDistanceCalculator();
   renderControlCalculator();
   $('#addPlayer').onclick=addNewPlayer;
