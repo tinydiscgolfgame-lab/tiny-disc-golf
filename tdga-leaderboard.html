@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173f3a">
+<title>TDGA Global Leaderboard — Tiny Disc Golf</title>
+<style>
+:root{color-scheme:light;--bg:#f0eee8;--surface:#fffdf8;--ink:#172522;--muted:#66716d;--line:#b7bfbb;--green:#173f3a;--green2:#2f6b58;--lime:#b2c957;--red:#b44b43}
+*{box-sizing:border-box}body{margin:0;padding:18px;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:760px;margin:auto}.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 8px 24px #14231e12}h1{font-size:1.45rem;margin:0 0 6px;color:var(--green)}h2{font-size:1.08rem;margin:0 0 10px}.note{color:var(--muted);font-size:.9rem;line-height:1.45}label{display:block;font-weight:750;margin:10px 0 5px}input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font:inherit;background:white;color:#172522}button{width:100%;border:0;border-radius:10px;background:var(--green);color:white;font-weight:800;font:inherit;padding:12px;margin-top:12px;cursor:pointer}button:disabled{opacity:.6}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid #d8ddd8}th{font-size:.82rem;color:var(--muted)}td:first-child,th:first-child{width:48px}td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}.empty{padding:16px 0;color:var(--muted)}#status{margin-top:10px;font-size:.92rem;line-height:1.4}.success{color:#24613e}.error{color:var(--red)}.small{font-size:.82rem}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="card">
+<h1>TDGA Global Leaderboard</h1>
+<p class="note">Tiny Disc Golf Association rankings. Only submissions approved by the leaderboard administrator appear publicly.</p>
+</section>
+<section class="card">
+<h2>Current Rankings</h2>
+<div id="leaderboard" class="empty">Loading approved rankings…</div>
+<button type="button" id="refresh">Refresh Rankings</button>
+<p id="loadStatus" class="note small" aria-live="polite"></p>
+</section>
+<section class="card">
+<h2>Submit a Ranking</h2>
+<p class="note">Enter your player name and ranking (0–1000). Your entry will be sent for approval and will not appear publicly until approved.</p>
+<form id="submissionForm" method="post" action="https://script.google.com/macros/s/AKfycbxbdYhfTh1oWohyRj5JUcNVt6TYUYTryBNYYt8AY0x7aXm9GzLOGej77TW5NKIYODmljA/exec" target="tdgaSubmitFrame">
+<label for="playerName">Player Name</label>
+<input id="playerName" name="playerName" maxlength="50" required autocomplete="name" placeholder="Your player name">
+<label for="ranking">Ranking (0–1000)</label>
+<input id="ranking" name="ranking" type="number" min="0" max="1000" step="1" required inputmode="numeric" placeholder="Enter ranking">
+<button id="submitButton" type="submit">Submit for Approval</button>
+</form>
+<iframe name="tdgaSubmitFrame" id="tdgaSubmitFrame" title="Submission response" hidden></iframe>
+<p id="status" aria-live="polite"></p>
+</section>
+</main>
+<script>
+const ENDPOINT='https://script.google.com/macros/s/AKfycbxbdYhfTh1oWohyRjJ5U...';
+let jsonpTimer;
+function tdgaLeaderboardCallback(data){
+  clearTimeout(jsonpTimer);
+  const box=document.getElementById('leaderboard');
+  const status=document.getElementById('loadStatus');
+  if(!data||!data.ok||!Array.isArray(data.players)){box.textContent='Could not load rankings. Please try again.';status.textContent='The leaderboard service returned an unexpected response.';return;}
+  if(!data.players.length){box.textContent='No approved rankings yet. Be the first to submit one!';status.textContent='Rankings update when the administrator approves submissions.';return;}
+  const table=document.createElement('table');
+  const thead=document.createElement('thead');const headRow=document.createElement('tr');
+  ['Rank','Player','Ranking'].forEach(label=>{const th=document.createElement('th');th.textContent=label;headRow.appendChild(th);});
+  thead.appendChild(headRow);table.appendChild(thead);
+  const tbody=document.createElement('tbody');
+  data.players.forEach((p,i)=>{const tr=document.createElement('tr');[p.rank||i+1,p.name,p.ranking].forEach((v,j)=>{const td=document.createElement('td');td.textContent=String(v);tr.appendChild(td);});tbody.appendChild(tr);});
+  table.appendChild(tbody);box.replaceChildren(table);status.textContent='Showing approved rankings only.';
+}
+function loadLeaderboard(){
+  const box=document.getElementById('leaderboard');const status=document.getElementById('loadStatus');
+  box.textContent='Loading approved rankings…';status.textContent='';
+  const old=document.getElementById('tdgaJsonp');if(old)old.remove();
+  if(jsonpTimer)clearTimeout(jsonpTimer);
+  window.tdgaLeaderboardCallback=tdgaLeaderboardCallback;
+  const script=document.createElement('script');script.id='tdgaJsonp';
+  script.src='https://script.google.com/macros/s/AKfycbxbdYhfTh1oWohyRj5JUcNVt6TYUYTryBNYYt8AY0x7aXm9GzLOGej77TW5NKIYODmljA/exec?callback=tdgaLeaderboardCallback&_='+Date.now();
+  script.onerror=()=>{clearTimeout(jsonpTimer);box.textContent='Unable to load the leaderboard right now.';status.textContent='Check the Apps Script web-app deployment and try refreshing.';};
+  document.head.appendChild(script);
+  jsonpTimer=setTimeout(()=>{box.textContent='The leaderboard is taking too long to respond.';status.textContent='Please try refreshing in a moment.';},12000);
+}
+document.getElementById('refresh').addEventListener('click',loadLeaderboard);
+const form=document.getElementById('submissionForm');const submitButton=document.getElementById('submitButton');const statusBox=document.getElementById('status');const frame=document.getElementById('tdgaSubmitFrame');
+let waitingForSubmission=false;
+form.addEventListener('submit',e=>{
+  const name=document.getElementById('playerName').value.trim();const raw=document.getElementById('ranking').value;const rank=Number(raw);
+  if(!name||name.length>50||raw===''||!Number.isFinite(rank)||rank<0||rank>1000){e.preventDefault();statusBox.className='error';statusBox.textContent='Enter a player name and a ranking from 0 to 1000.';return;}
+  document.getElementById('playerName').value=name;waitingForSubmission=true;submitButton.disabled=true;submitButton.textContent='Submitting…';statusBox.className='';statusBox.textContent='Sending your ranking for review…';
+});
+frame.addEventListener('load',()=>{
+  if(!waitingForSubmission)return;
+  waitingForSubmission=false;submitButton.disabled=false;submitButton.textContent='Submit for Approval';
+  statusBox.className='success';statusBox.textContent='Your submission was sent. It will appear on the public leaderboard only after approval.';
+  form.reset();
+});
+loadLeaderboard();
+</script>
+</body>
+</html>
