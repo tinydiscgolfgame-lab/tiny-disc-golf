@@ -1,0 +1,40 @@
+from pathlib import Path
+
+p = Path('index.html')
+s = p.read_text(encoding='utf-8')
+
+if 'data-tab="reward">Reward Roll</button>' in s:
+    print('Reward Roll already exists in index.html')
+    raise SystemExit(0)
+
+tab = '<button class="tab" data-tab="courses">Courses</button>'
+if tab not in s:
+    raise SystemExit('Courses tab not found')
+s = s.replace(tab, tab + '<button class="tab" data-tab="reward">Reward Roll</button>', 1)
+s = s.replace('.tabs{display:grid;grid-template-columns:repeat(10,1fr)', '.tabs{display:grid;grid-template-columns:repeat(11,1fr)', 1)
+
+section = '''<section id="reward" class="panel"><div class="tool"><h3>Reward Rolls</h3><p class="note">In Tiny Disc Golf, when a Player performs a spectacular feat like throwing in an Ace or winning a League or Tournament, then you have the chance to earn a random Reward from the Reward Roll Chart below. As with Success Rolls, a lower roll being better and wins the Player the best benefit!</p><button class="primary" id="rollReward">ROLL REWARD 1–100</button><div class="big" id="rewardNumber">—</div><div class="result" id="rewardResult">—</div><div id="rewardTable"></div><div class="modifier-section"><h3>Special Abilities (SA) Discs</h3><p class="note">If you were rewarded a SA Disc from your Reward Roll, choose the mold of disc you want and then roll once again to determine the type of Special Ability that disc has. So, if your putting is atrocious, you might want a SA Putter or if your Driving is subpar, you might choose a Driver and then roll to see how that disc has been changed to help your game!</p><button class="primary" id="rollSaDisc">ROLL SA DISC 1–100</button><div class="big" id="saNumber">—</div><div class="result" id="saResult">—</div><div id="saTable"></div></div></div></section>'''
+marker = '<section id="direction" class="panel">'
+if marker not in s:
+    raise SystemExit('Direction panel not found')
+s = s.replace(marker, section + marker, 1)
+
+js = r'''const rewardRolls=[[1,1,'+2 to all Player Stats, + SA Disc & +15% Accessory'],[2,2,'+2 to all Player Stats'],[3,3,'SA Disc & +15% to Success Rolls Accessory of choice'],[4,5,'SA Disc'],[6,10,'Training Session! +5 to be spread among Player Stats'],[11,15,'Training Session! +5 to be spread among Player Stats'],[16,20,'Training Session! +1 to each Player Stats'],[21,25,'Training Session! +1 to Player Stat of choice'],[26,30,'Cart! +20% to all Success Rolls due to lack of fatigue'],[31,35,'Grip Enhancer! +15% to Success Rolls'],[36,40,'+1 Slot in Bag'],[41,45,'+10% to Success Rolls Accessory of choice'],[46,50,'+5% to Success Rolls Accessory of choice'],[51,55,'Umbrella & DG Gloves! Disregard rain related modifiers'],[56,60,'Lucky Charm! Roll 2 dice at beginning of round…If results are below 10 then the Player has Double Luck Points for that round'],[61,65,'Rangefinder! +15% to all tee shots'],[66,70,'Disc Golf Shoes! +10% to all Success Rolls'],[71,75,'Rating Increases by triple for this round'],[76,80,'Cooler Full of Beverages! Roll 2 dice at beginning of round…if over 50, then the Player has no Luck Points for that round, but if under then Luck Points are double that round'],[81,85,'Almost There! Just not enough to be noticed'],[86,90,'False Plateau! Thought Player made gains, but you didn’t'],[91,95,'In your own head! Great victory but Player gains nothing'],[96,96,'Hard high five from your homie causes a hand injury! -2 to all Player Stats for 5 rounds'],[97,97,'Left on Course! Lost your favorite Accessory for 5 rounds'],[98,98,'Left on Course! Lost your favorite Disc for 5 rounds'],[99,99,'Stolen Bag! You can’t use your usual Bag, Discs and Accessories for 5 rounds and your backup bag only has 6 slots'],[100,100,'Freak injury while celebrating! -2 to all Player Stats for 10 rounds & the Player’s favorite SA Disc is lost forever']];
+const saDiscRolls=[[1,10,'All Modifiers are nullified'],[11,20,'All Course Modifiers are nullified'],[21,30,'All Hole Modifiers are nullified'],[31,40,'All Course Modifiers are nullified'],[41,50,'Power Disc! The Power of this disc does not factor into calculating Success Rolls & +20 feet/2” to all throws'],[51,60,'Control Disc! +25% to all Success Rolls'],[61,70,'Putting Disc! +35% to all Putts'],[71,80,'Lucky Disc! The disc itself has its own Luck equal to the Players Luck Stat that can be spent during a round'],[81,90,'+20% to all Success Rolls'],[91,100,'+10% to all Success Rolls']];
+function findReward(n){return rewardRolls.find(r=>n>=r[0]&&n<=r[1])}
+function findSaReward(n){return saDiscRolls.find(r=>n>=r[0]&&n<=r[1])}
+function rewardTableHtml(rows){return '<div class="distance-table-wrap"><table class="distance-table"><thead><tr><th>Roll</th><th>Reward</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+r[0]+(r[0]===r[1]?'':'–'+r[1])+'</td><td style="text-align:left">'+escapeDistanceHtml(r[2])+'</td></tr>').join('')+'</tbody></table></div>'}
+function renderRewardTables(){const rt=$('#rewardTable'),st=$('#saTable');if(rt)rt.innerHTML=rewardTableHtml(rewardRolls);if(st)st.innerHTML=rewardTableHtml(saDiscRolls)}
+function initRewardRoll(){renderRewardTables();$('#rollReward')?.addEventListener('click',()=>{const n=Math.floor(Math.random()*100)+1;const r=findReward(n);$('#rewardNumber').textContent=n;$('#rewardResult').textContent=r?r[2]:'—'});$('#rollSaDisc')?.addEventListener('click',()=>{const n=Math.floor(Math.random()*100)+1;const r=findSaReward(n);$('#saNumber').textContent=n;$('#saResult').textContent=r?r[2]:'—'})}
+'''
+if 'const rewardRolls=[' in s:
+    raise SystemExit('Reward Roll JS unexpectedly already exists')
+s = s.replace('const clickableModifiers=', js + 'const clickableModifiers=', 1)
+
+init_marker = 'loadPlayers();renderPlayers();renderRoundPlayers();renderRounds();renderCourses();renderCourseEditor();'
+if init_marker not in s:
+    raise SystemExit('App initialization marker not found')
+s = s.replace(init_marker, init_marker + 'initRewardRoll();', 1)
+
+p.write_text(s, encoding='utf-8')
+print('Reward Roll patch applied successfully')
