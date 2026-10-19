@@ -1,9 +1,8 @@
 name: Deploy Reward Roll Version to GitHub Pages
 
 on:
-  workflow_run:
-    workflows: ["Deploy Tiny Disc Golf to GitHub Pages"]
-    types: [completed]
+  push:
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -11,12 +10,11 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages-reward-roll"
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -24,8 +22,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
       - name: Add Reward Roll tab to published copy
         shell: python
         run: |
