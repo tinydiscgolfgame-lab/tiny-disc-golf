@@ -42,3 +42,4 @@ const tdgWorldChampionCourse={id:'builtin-tdg-world-champion',name:'TDG World Ch
           git diff --cached --quiet && exit 0
           git commit -m 'Add four new TDG courses'
           git push
+# Trigger installer after initial workflow creation
