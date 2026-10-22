@@ -1,7 +1,10 @@
 name: Install Four TDG Courses
 on:
   push:
+    branches:
+      - main
     paths:
+      - 'index.html'
       - '.github/workflows/add-four-courses.yml'
 permissions:
   contents: write
@@ -19,7 +22,7 @@ jobs:
           if "id:'builtin-tdg-middle-school'" in s:
               print('Courses already installed; rebuilding their saved order.')
               old="savedCourses=savedCourses.filter(c=>c.id!=='builtin-18'&&c.id!=='builtin-first-course'&&c.id!=='builtin-everyones-favorite-local'&&c.id!=='builtin-legendary-local').map(c=>c.id==='builtin-9'?{...c,name:'TDG Elementary'}:c);savedCourses.unshift(legendaryLocalCourse);savedCourses.unshift(favoriteLocalCourse);savedCourses.unshift(firstCourse);localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));"
-              new="savedCourses=savedCourses.filter(c=>c.id!=='builtin-18'&&c.id!=='builtin-first-course'&&c.id!=='builtin-everyones-favorite-local'&&c.id!=='builtin-legendary-local'&&c.id!=='builtin-9'&&c.id!=='builtin-tdg-middle-school'&&c.id!=='builtin-tdg-high-school'&&c.id!=='builtin-tdg-university'&&c.id!=='builtin-tdg-world-champion');savedCourses.unshift(tdgWorldChampionCourse);savedCourses.unshift(tdgUniversityCourse);savedCourses.unshift(tdgHighSchoolCourse);savedCourses.unshift(tdgMiddleSchoolCourse);savedCourses.unshift({...tdgElementaryCourse,name:'TDG Elementary'});savedCourses.unshift(legendaryLocalCourse);savedCourses.unshift(favoriteLocalCourse);savedCourses.unshift(firstCourse);localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));"
+              new="savedCourses=savedCourses.filter(c=>c.id!=='builtin-18'&&c.id!=='builtin-first-course'&&c.id!=='builtin-everyones-favorite-local'&&c.id!=='builtin-legendary-local'&&c.id!=='builtin-9'&&c.id!=='builtin-tdg-middle-school'&&c.id!=='builtin-tdg-high-school'&&c.id!=='builtin-tdg-university'&&c.id!=='builtin-tdg-world-champion');savedCourses.unshift(firstCourse);savedCourses.unshift(favoriteLocalCourse);savedCourses.unshift(legendaryLocalCourse);savedCourses.unshift(tdgWorldChampionCourse);savedCourses.unshift(tdgUniversityCourse);savedCourses.unshift(tdgHighSchoolCourse);savedCourses.unshift(tdgMiddleSchoolCourse);savedCourses.unshift({...tdgElementaryCourse,name:'TDG Elementary'});localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));"
               if old not in s:
                   raise SystemExit('Existing course save/unshift marker not found')
               s=s.replace(old,new,1)
@@ -34,7 +37,7 @@ const tdgWorldChampionCourse={id:'builtin-tdg-world-champion',name:'TDG World Ch
                   raise SystemExit('Course insertion marker not found')
               s=s.replace(marker,insert+marker,1)
               old="savedCourses=savedCourses.filter(c=>c.id!=='builtin-18'&&c.id!=='builtin-first-course'&&c.id!=='builtin-everyones-favorite-local'&&c.id!=='builtin-legendary-local').map(c=>c.id==='builtin-9'?{...c,name:'TDG Elementary'}:c);savedCourses.unshift(legendaryLocalCourse);savedCourses.unshift(favoriteLocalCourse);savedCourses.unshift(firstCourse);localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));"
-              new="savedCourses=savedCourses.filter(c=>c.id!=='builtin-18'&&c.id!=='builtin-first-course'&&c.id!=='builtin-everyones-favorite-local'&&c.id!=='builtin-legendary-local'&&c.id!=='builtin-9').map(c=>c.id==='builtin-9'?{...c,name:'TDG Elementary'}:c);savedCourses.unshift(tdgWorldChampionCourse);savedCourses.unshift(tdgUniversityCourse);savedCourses.unshift(tdgHighSchoolCourse);savedCourses.unshift(tdgMiddleSchoolCourse);savedCourses.unshift({...tdgElementaryCourse,name:'TDG Elementary'});savedCourses.unshift(legendaryLocalCourse);savedCourses.unshift(favoriteLocalCourse);savedCourses.unshift(firstCourse);localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));"
+              new="savedCourses=savedCourses.filter(c=>c.id!=='builtin-18'&&c.id!=='builtin-first-course'&&c.id!=='builtin-everyones-favorite-local'&&c.id!=='builtin-legendary-local'&&c.id!=='builtin-9').map(c=>c.id==='builtin-9'?{...c,name:'TDG Elementary'}:c);savedCourses.unshift(firstCourse);savedCourses.unshift(favoriteLocalCourse);savedCourses.unshift(legendaryLocalCourse);savedCourses.unshift(tdgWorldChampionCourse);savedCourses.unshift(tdgUniversityCourse);savedCourses.unshift(tdgHighSchoolCourse);savedCourses.unshift(tdgMiddleSchoolCourse);savedCourses.unshift({...tdgElementaryCourse,name:'TDG Elementary'});localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));"
               if old not in s:
                   raise SystemExit('Course save/unshift marker not found')
               s=s.replace(old,new,1)
