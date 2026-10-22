@@ -461,9 +461,12 @@ function renderCourseEditor(course){
     box.appendChild(row);
   }
 }
+const tdgElementaryCourse={id:'builtin-9',name:'TDG Elementary',description:'Welcome to TDG Elementary! This beginner-friendly 9-hole course is a great place to learn the basics of Tiny Disc Golf, practice your skills, and build confidence before taking on tougher courses. Watch the hole modifiers as you play, and have fun working your way around the course!',holes:9,pars:[3,3,3,3,3,3,3,3,3],distances:['200 ft','225 ft','250 ft','180 ft','275 ft','210 ft','300 ft','240 ft','260 ft'],shotShapes:['Straight with gentle fade (+10%)','Hyzer left around trees (-10%)','Controlled turnover right (-10%)','Straight tunnel shot (-20%)','Open fairway hyzer','Low straight shot (-10%)','Distance drive with stable finish','Uphill straight with fade','Finishing hyzer toward basket']};
+const tdgElementaryIndex=savedCourses.findIndex(c=>c.id==='builtin-9');
+if(tdgElementaryIndex>=0){savedCourses[tdgElementaryIndex]=tdgElementaryCourse;localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));}
 if(!savedCourses.length){
   savedCourses=[
-    {id:'builtin-9',name:'The Quick 9',holes:9,pars:[3,3,3,3,3,3,3,3,3],distances:['200 ft','225 ft','250 ft','180 ft','275 ft','210 ft','300 ft','240 ft','260 ft'],shotShapes:['Straight with gentle fade','Hyzer left around trees','Controlled turnover right','Straight tunnel shot','Open fairway hyzer','Low straight shot','Distance drive with stable finish','Uphill straight with fade','Finishing hyzer toward basket']}
+    {id:'builtin-9',name:'TDG Elementary',description:'Welcome to TDG Elementary! This beginner-friendly 9-hole course is a great place to learn the basics of Tiny Disc Golf, practice your skills, and build confidence before taking on tougher courses. Watch the hole modifiers as you play, and have fun working your way around the course!',holes:9,pars:[3,3,3,3,3,3,3,3,3],distances:['200 ft','225 ft','250 ft','180 ft','275 ft','210 ft','300 ft','240 ft','260 ft'],shotShapes:['Straight with gentle fade (+10%)','Hyzer left around trees (-10%)','Controlled turnover right (-10%)','Straight tunnel shot (-20%)','Open fairway hyzer','Low straight shot (-10%)','Distance drive with stable finish','Uphill straight with fade','Finishing hyzer toward basket'] }
   ];
   localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));
 }
