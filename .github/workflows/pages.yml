@@ -27,6 +27,9 @@ jobs:
       - name: Apply Reward Roll patch
         run: python scripts/add_reward_roll.py
 
+      - name: Install four new TDG courses
+        run: python scripts/install_four_courses.py
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
