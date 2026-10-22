@@ -42,6 +42,7 @@ jobs:
                   raise SystemExit('Could not find saved course initialization marker.')
               s = s.replace(marker, migration + marker, 1)
 
+          s = s.replace("name:'The Quick 9'", "name:'TDG Elementary'")
           p.write_text(s, encoding='utf-8')
 
       - name: Commit source update
@@ -53,6 +54,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No source changes needed."
           else
-            git commit -m "Rename Quick 9 to TDG Elementary and add hole modifiers"
+            git commit -m "Keep TDG Elementary course name"
             git push
           fi
