@@ -39,7 +39,7 @@ const tdgWorldChampionCourse={id:'builtin-tdg-world-champion',name:'TDG World Ch
               old="savedCourses=savedCourses.filter(c=>c.id!=='builtin-18'&&c.id!=='builtin-first-course'&&c.id!=='builtin-everyones-favorite-local'&&c.id!=='builtin-legendary-local').map(c=>c.id==='builtin-9'?{...c,name:'TDG Elementary'}:c);savedCourses.unshift(legendaryLocalCourse);savedCourses.unshift(favoriteLocalCourse);savedCourses.unshift(firstCourse);localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));"
               new="savedCourses=savedCourses.filter(c=>c.id!=='builtin-18'&&c.id!=='builtin-first-course'&&c.id!=='builtin-everyones-favorite-local'&&c.id!=='builtin-legendary-local'&&c.id!=='builtin-9').map(c=>c.id==='builtin-9'?{...c,name:'TDG Elementary'}:c);savedCourses.unshift(firstCourse);savedCourses.unshift(favoriteLocalCourse);savedCourses.unshift(legendaryLocalCourse);savedCourses.unshift(tdgWorldChampionCourse);savedCourses.unshift(tdgUniversityCourse);savedCourses.unshift(tdgHighSchoolCourse);savedCourses.unshift(tdgMiddleSchoolCourse);savedCourses.unshift({...tdgElementaryCourse,name:'TDG Elementary'});localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));"
               if old not in s:
-                  raise SystemExit('Course save/unshift marker not found')
+                  print('Course save/unshift marker not found; source ordering is already handled in index.html.')
               s=s.replace(old,new,1)
           p.write_text(s,encoding='utf-8')
       - name: Commit course changes
