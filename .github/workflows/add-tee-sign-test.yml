@@ -6,6 +6,7 @@ on:
     paths:
       - 'index.html'
       - 'scripts/add_tee_sign_test.py'
+      - '.github/workflows/add-tee-sign-test.yml'
   workflow_dispatch:
 
 permissions:
