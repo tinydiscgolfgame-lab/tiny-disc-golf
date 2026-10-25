@@ -30,6 +30,9 @@ jobs:
       - name: Install four new TDG courses
         run: python scripts/install_four_courses.py
 
+      - name: Add First Course Hole 1 tee sign test
+        run: python scripts/add_tee_sign_test.py
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
