@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200">
+<rect width="900" height="1200" fill="#f0ead7"/><rect x="18" y="18" width="864" height="1164" rx="20" fill="#173b36" stroke="#c9a956" stroke-width="12"/><rect x="42" y="42" width="816" height="1116" rx="12" fill="#1d4b43" stroke="#e7c66a" stroke-width="3"/>
+<text x="450" y="95" text-anchor="middle" fill="#e7c66a" font-family="Georgia,serif" font-size="24" letter-spacing="5">EVERYBODY'S FAVORITE</text><text x="450" y="145" text-anchor="middle" fill="#fff8e6" font-family="Georgia,serif" font-size="36" font-weight="bold">LOCAL COURSE</text>
+<path d="M80 180 H820" stroke="#c9a956" stroke-width="3"/>
+<text x="80" y="225" fill="#fff8e6" font-size="23" font-family="Arial,sans-serif" font-weight="bold">HOLE 8 • PAR 3</text><text x="820" y="225" text-anchor="end" fill="#e7c66a" font-size="25" font-family="Arial,sans-serif" font-weight="bold">290 ft</text>
+<text x="450" y="275" text-anchor="middle" fill="#cfe5d7" font-size="27" font-family="Georgia,serif" font-style="italic">Creekside Drop</text>
+<rect x="80" y="315" width="740" height="590" rx="18" fill="#346c55" stroke="#c9a956" stroke-width="3"/>
+<path d="M140 345 Q110 500 150 650 T140 875 M760 345 Q800 500 750 650 T760 875" stroke="#59886b" stroke-width="4" fill="none" stroke-dasharray="10 14"/>
+<path d="M450 865 L450 455" stroke="#d9dfb0" stroke-width="3" stroke-dasharray="8 12" opacity=".65"/>
+<path d="M630 430 Q580 520 635 610 T620 820" fill="none" stroke="#55c6d8" stroke-width="42" opacity=".9"/><path d="M630 430 Q580 520 635 610 T620 820" fill="none" stroke="#b9f1f2" stroke-width="5" stroke-dasharray="12 10"/>
+
+<path d="M450 850 Q420 690 450 475" stroke="#f4d46d" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M450 850 Q420 690 450 475" stroke="#fff8e6" stroke-width="2" fill="none" stroke-dasharray="9 12"/>
+<g stroke="#173b36" stroke-width="4" fill="#28614f"><rect x="350" y="655" width="10" height="32" rx="3" fill="#8b6848" stroke="#6a4d35"/><circle cx="355" cy="650" r="20"/><circle cx="342" cy="657" r="12.4"/><circle cx="368" cy="657" r="12.4"/></g>
+<g stroke="#173b36" stroke-width="4" fill="#28614f"><rect x="515" y="615" width="10" height="34" rx="3" fill="#8b6848" stroke="#6a4d35"/><circle cx="520" cy="610" r="22"/><circle cx="505.7" cy="617.7" r="13.64"/><circle cx="534.3" cy="617.7" r="13.64"/></g>
+<g stroke="#173b36" stroke-width="4" fill="#28614f"><rect x="385" y="525" width="10" height="32" rx="3" fill="#8b6848" stroke="#6a4d35"/><circle cx="390" cy="520" r="20"/><circle cx="377" cy="527" r="12.4"/><circle cx="403" cy="527" r="12.4"/></g>
+<g transform="translate(450 475)"><path d="M0 0 L0 48" stroke="#f7f0d7" stroke-width="5"/><ellipse cx="0" cy="4" rx="19" ry="7" fill="#e7c66a" stroke="#f8f4e6" stroke-width="3"/><path d="M-17 8 L-13 30 Q0 39 13 30 L17 8" fill="none" stroke="#e7c66a" stroke-width="3"/><path d="M-13 12 L13 30 M13 12 L-13 30 M-14 21 L14 21" stroke="#f8f4e6" stroke-width="2"/></g>
+<g transform="translate(450 850)"><rect x="-42" y="-15" width="84" height="30" rx="5" fill="#d9c7a0" stroke="#fff8e6" stroke-width="3"/><path d="M-30 -8 H30 M-30 0 H30 M-30 8 H30" stroke="#8c7650" stroke-width="2"/></g>
+<text x="450" y="930" text-anchor="middle" fill="#fff8e6" font-size="20" font-weight="bold">TEE PAD</text>
+<g transform="translate(785 375)"><path d="M0 30 L0 0 L-10 14 M0 0 L10 14" stroke="#fff8e6" stroke-width="4" fill="none"/><text x="0" y="52" text-anchor="middle" fill="#fff8e6" font-size="18">N</text></g>
+<rect x="75" y="960" width="750" height="145" rx="12" fill="#f0ead7" stroke="#c9a956" stroke-width="4"/><text x="105" y="1000" fill="#173b36" font-family="Arial,sans-serif" font-size="20" font-weight="bold">HOLE NOTES</text><text x="105" y="1040" fill="#173b36" font-family="Arial,sans-serif" font-size="20">50 ft downhill; plays like 193 ft • −25% until C1</text><text x="105" y="1080" fill="#173b36" font-family="Arial,sans-serif" font-size="16">League-ready • scenic lines • choose your shot</text>
+<text x="450" y="1135" text-anchor="middle" fill="#e7c66a" font-family="Georgia,serif" font-size="17" letter-spacing="2">TINY DISC GOLF • LOCAL FAVORITE SERIES</text></svg>
