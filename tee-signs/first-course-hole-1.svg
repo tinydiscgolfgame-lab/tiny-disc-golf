@@ -47,7 +47,7 @@
   <text x="450" y="968" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="900" fill="#ffffff">TEE PAD</text>
   <!-- flight line -->
   <path d="M450 880 C450 760 450 650 450 540" fill="none" stroke="#ffffff" stroke-width="9" stroke-dasharray="20 18"/>
-  <polygon points="450,500 428,540 472,540" fill="#ffffff"/>
+  
   <!-- basket -->
   <g transform="translate(450 505) scale(.6)">
     <rect x="-5" y="0" width="10" height="80" fill="#173f3a"/>
