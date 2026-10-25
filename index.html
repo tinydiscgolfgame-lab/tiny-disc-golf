@@ -491,6 +491,7 @@ function renderCourses(){
     const d=document.createElement('div');d.className='saved-round';
     d.innerHTML='<div class="saved-round-title">'+c.name+' • '+c.holes+' holes</div>';
     if(c.description){const intro=document.createElement('div');intro.className='saved-round-detail';intro.style.margin='6px 0 10px';intro.textContent=c.description;d.appendChild(intro)}
+    if(c.id==='builtin-first-course'){const teeSign=document.createElement('a');teeSign.className='secondary';teeSign.href='tee-signs/first-course-hole-1.svg';teeSign.target='_blank';teeSign.rel='noopener noreferrer';teeSign.textContent='View Hole 1 Tee Sign';teeSign.style.display='block';teeSign.style.textAlign='center';teeSign.style.textDecoration='none';teeSign.style.margin='6px 0 10px';d.appendChild(teeSign)}
     const holes=document.createElement('div');holes.className='saved-round-detail';holes.textContent=c.pars.map((p,i)=>'H'+(i+1)+': Par '+p+(c.distances[i]?' • '+c.distances[i]:'')+(c.shotShapes[i]?' • '+c.shotShapes[i]:'')).join(', ');d.appendChild(holes);
     const edit=document.createElement('button');edit.className='secondary';edit.style.marginTop='8px';edit.textContent='Edit Course';edit.onclick=()=>{editingCourseId=c.id;renderCourseEditor(c)};
     const exp=document.createElement('button');exp.className='secondary';exp.style.marginTop='6px';exp.textContent='Export Course';exp.onclick=()=>exportCourse(c);
