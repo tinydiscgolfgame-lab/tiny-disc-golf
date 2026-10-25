@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-label="Legendary Local Course Hole 5 tee sign">
+<defs><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#26343b"/><stop offset="1" stop-color="#10191f"/></linearGradient><linearGradient id="map" x2="0" y2="1"><stop stop-color="#7f9469"/><stop offset="1" stop-color="#344d3b"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-opacity=".55"/></filter></defs>
+<rect x="18" y="18" width="864" height="1164" rx="34" fill="#080d10" stroke="#b7a27b" stroke-width="13"/>
+<rect x="38" y="38" width="824" height="1124" rx="24" fill="url(#bg)" stroke="#56636a" stroke-width="3"/>
+<path d="M60 215 H840" stroke="#b7a0d3" stroke-width="5"/>
+<path d="M65 66 H835 V198 H65Z" fill="#172229" stroke="#b7a27b" stroke-width="2"/>
+<text x="450" y="112" text-anchor="middle" font-family="Georgia,serif" font-size="36" font-weight="bold" fill="#f4e7ca" letter-spacing="3">LEGENDARY LOCAL</text>
+<text x="450" y="160" text-anchor="middle" font-family="Georgia,serif" font-size="26" fill="#b7a0d3" letter-spacing="7">COURSE • TINY DISC GOLF</text>
+<rect x="65" y="240" width="770" height="110" rx="14" fill="#26343b" stroke="#b7a0d3" stroke-width="4"/>
+<text x="92" y="282" font-family="Arial,sans-serif" font-size="24" fill="#b7c4c8" letter-spacing="3">HOLE</text><text x="95" y="332" font-family="Georgia,serif" font-size="58" font-weight="bold" fill="#fff0d5">5</text>
+<text x="190" y="292" font-family="Georgia,serif" font-size="32" fill="#fff0d5">THE PINES</text><text x="190" y="326" font-family="Arial,sans-serif" font-size="21" fill="#b7a0d3" letter-spacing="2">TIGHT WOODLAND</text>
+<rect x="65" y="375" width="770" height="635" rx="16" fill="url(#map)" stroke="#b7a27b" stroke-width="5" filter="url(#shadow)"/>
+<path d="M82 410 Q200 370 300 420 T500 420 T815 410 M82 960 Q230 910 350 955 T600 955 T815 950" fill="none" stroke="#9eb18a" stroke-width="6" opacity=".6"/>
+<g fill="#45624a"><circle cx="245" cy="240" r="28"/><circle cx="300" cy="300" r="32"/><circle cx="610" cy="235" r="30"/><circle cx="660" cy="330" r="26"/><circle cx="260" cy="540" r="24/><circle cx="650" cy="600" r="29"/></g>
+<path d="M110 430 Q200 460 220 550 T170 720 Q230 850 120 960 M790 430 Q680 500 730 620 T680 820 Q750 900 780 960" fill="none" stroke="#263f32" stroke-width="20" opacity=".8"/>
+<path d="M450 890 L450 500" fill="none" stroke="#f8f0d9" stroke-width="9" stroke-dasharray="20 18" stroke-linecap="round"/>
+<rect x="420" y="865" width="60" height="48" rx="5" fill="#c5c7bb" stroke="#172229" stroke-width="5"/><text x="450" y="895" text-anchor="middle" font-family="Arial" font-size="18" font-weight="bold" fill="#172229">TEE</text>
+<g transform="translate(450 500)"><ellipse cx="0" cy="27" rx="30" ry="7" fill="#1c2926"/><path d="M-20 -2 H20 L15 30 H-15Z" fill="#d9b45d" stroke="#3a3020" stroke-width="3"/><path d="M-26 -8 H26 L20 0 H-20Z" fill="#f2d17b" stroke="#3a3020" stroke-width="3"/><path d="M-20 -8 L-14 -32 H14 L20 -8" fill="none" stroke="#d9b45d" stroke-width="4"/><path d="M-14 -30 L-6 -10 M0 -30 L0 -10 M14 -30 L6 -10" stroke="#d9b45d" stroke-width="3"/></g>
+<rect x="65" y="1030" width="770" height="98" rx="14" fill="#1b272d" stroke="#b7a0d3" stroke-width="3"/>
+<text x="90" y="1068" font-family="Arial,sans-serif" font-size="22" fill="#aebdc0" letter-spacing="2">PAR</text><text x="90" y="1108" font-family="Georgia,serif" font-size="38" fill="#fff0d5">3</text>
+<text x="300" y="1068" font-family="Arial,sans-serif" font-size="22" fill="#aebdc0" letter-spacing="2">DISTANCE</text><text x="300" y="1108" font-family="Georgia,serif" font-size="38" fill="#fff0d5">140 ft</text>
+<text x="590" y="1068" font-family="Arial,sans-serif" font-size="22" fill="#aebdc0" letter-spacing="2">SHOT SHAPE</text><text x="590" y="1108" font-family="Georgia,serif" font-size="30" fill="#b7a0d3">STRAIGHT</text>
+<text x="450" y="1150" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-style="italic" fill="#b7a27b">Find your line. Own the legend.</text></svg>
