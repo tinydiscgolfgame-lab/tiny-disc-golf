@@ -43,13 +43,13 @@
     <circle cx="145" cy="520" r="18"/><circle cx="205" cy="885" r="20"/><circle cx="740" cy="510" r="18"/><circle cx="760" cy="880" r="22"/><circle cx="120" cy="710" r="14"/><circle cx="690" cy="700" r="15"/>
   </g>
   <!-- tee pad -->
-  <rect x="350" y="886" width="200" height="48" rx="7" fill="#c9c2b4" stroke="#173f3a" stroke-width="6"/>
+  <rect x="425" y="895" width="50" height="24" rx="4" fill="#c9c2b4" stroke="#173f3a" stroke-width="3"/>
   <text x="450" y="968" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="900" fill="#ffffff">TEE PAD</text>
   <!-- flight line -->
   <path d="M450 880 C450 760 450 650 450 540" fill="none" stroke="#ffffff" stroke-width="9" stroke-dasharray="20 18"/>
   <polygon points="450,500 428,540 472,540" fill="#ffffff"/>
   <!-- basket -->
-  <g transform="translate(450 505)">
+  <g transform="translate(450 505) scale(.6)">
     <rect x="-5" y="0" width="10" height="80" fill="#173f3a"/>
     <path d="M-45 78 L45 78 L30 105 L-30 105 Z" fill="#e7c34e" stroke="#173f3a" stroke-width="5"/>
     <path d="M-42 80 L-58 35 M-22 80 L-30 28 M0 80 L0 24 M22 80 L30 28 M42 80 L58 35" stroke="#173f3a" stroke-width="5"/>
