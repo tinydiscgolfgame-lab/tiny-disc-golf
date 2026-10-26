@@ -8,24 +8,24 @@
 <rect x="575" y="255" width="270" height="130" rx="16" fill="#eaf2f8" stroke="#a8c2d7" stroke-width="3"/><text x="600" y="296" font-family="Arial" font-size="20" font-weight="800" fill="#53677a">DISTANCE</text><text x="600" y="350" font-family="Arial" font-size="40" font-weight="900" fill="#123b70">300 ft</text>
 <rect x="55" y="405" width="790" height="510" rx="18" fill="#174e43"/><rect x="72" y="422" width="756" height="476" rx="12" fill="url(#field)"/><path d="M110 440 Q220 470 300 440 T500 440 T790 440 M110 880 Q220 850 300 880 T500 880 T790 880" fill="none" stroke="#c7e3a8" stroke-width="7" opacity=".65"/>
 <g id="water-carry-peninsula">
-<!-- Main water hazard separating the tee from the target green -->
-<path d="M155 565 Q235 515 315 565 T475 565 Q545 585 565 660 Q585 735 515 790 Q440 825 355 780 Q285 745 290 675 Q290 625 235 620 Q190 615 155 565Z" fill="#318eaf" stroke="#d9f2f2" stroke-width="6"/>
-<path d="M170 570 Q245 535 310 575 T455 570 M320 735 Q385 770 450 750 T535 695" fill="none" stroke="#bceaf0" stroke-width="4" opacity=".85"/>
-<!-- Peninsula green on far bank -->
-<path d="M525 470 Q585 445 650 470 Q705 492 725 540 Q737 577 695 600 Q640 620 590 595 Q548 575 525 535Z" fill="#80c96c" stroke="#f4e7a3" stroke-width="6"/>
-<path d="M545 490 Q595 465 647 486 T705 535" fill="none" stroke="#d6edb0" stroke-width="4"/>
-<!-- Straight carry line from tee over 70 ft of water to basket on peninsula -->
-<path d="M450 840 L625 545" fill="none" stroke="#fff5c7" stroke-width="42" stroke-linecap="round" opacity=".8"/>
-<path d="M450 840 L625 545" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="15 13" stroke-linecap="round"/>
+<!-- Small water hazard set 70 ft from the basket -->
+<path d="M445 660 Q458 635 488 642 Q510 626 532 646 Q558 648 560 673 Q557 698 530 705 Q505 719 482 704 Q455 704 445 682 Q438 670 445 660Z" fill="#318eaf" stroke="#d9f2f2" stroke-width="5"/>
+<path d="M458 662 Q480 648 500 660 T544 663 M465 686 Q488 696 512 685 T546 681" fill="none" stroke="#bceaf0" stroke-width="3" opacity=".9"/>
+<!-- Tee-to-basket shot line -->
+<path d="M450 840 L625 545" fill="none" stroke="#fff5c7" stroke-width="30" stroke-linecap="round" opacity=".8"/>
+<path d="M450 840 L625 545" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="14 12" stroke-linecap="round"/>
+<!-- Approximate 70 ft separation from pond to basket -->
+<path d="M520 650 L604 570" fill="none" stroke="#fffdf4" stroke-width="4" stroke-dasharray="8 7"/>
 <g font-family="Arial,sans-serif" font-weight="900" text-anchor="middle">
-<rect x="105" y="445" width="190" height="42" rx="10" fill="#fffdf4" stroke="#318eaf" stroke-width="3"/>
-<text x="200" y="472" font-size="19" fill="#17647a">WATER CARRY</text>
-<rect x="290" y="630" width="190" height="42" rx="10" fill="#fffdf4" stroke="#318eaf" stroke-width="3"/>
-<text x="385" y="657" font-size="19" fill="#17647a">70 FT / 7 IN</text>
+<rect x="95" y="445" width="210" height="42" rx="10" fill="#fffdf4" stroke="#318eaf" stroke-width="3"/>
+<text x="200" y="472" font-size="19" fill="#17647a">SMALL WATER HAZARD</text>
+<rect x="430" y="716" width="180" height="42" rx="10" fill="#fffdf4" stroke="#318eaf" stroke-width="3"/>
+<text x="520" y="743" font-size="19" fill="#17647a">70 FT TO BASKET</text>
 <rect x="595" y="430" width="185" height="42" rx="10" fill="#fffdf4" stroke="#236343" stroke-width="3"/>
-<text x="687" y="457" font-size="18" fill="#17452f">PENINSULA GREEN</text>
+<text x="687" y="457" font-size="18" fill="#17452f">BASKET GREEN</text>
 </g>
 </g>
+
 <rect x="432" y="830" width="36" height="48" rx="5" fill="#e8eef2" stroke="#123b70" stroke-width="4"/><text x="450" y="865" text-anchor="middle" font-family="Arial" font-size="13" font-weight="900" fill="#123b70">TEE</text>
 <g transform="translate(625 545)"><ellipse cx="0" cy="28" rx="28" ry="7" fill="#173c31"/><path d="M-19 0 H19 L14 28 H-14Z" fill="#f3cb36" stroke="#123b70" stroke-width="3"/><path d="M-24 -8 H24 L19 0 H-19Z" fill="#fff0a3" stroke="#123b70" stroke-width="3"/><path d="M-17 -8 L-12 -29 H12 L17 -8" fill="none" stroke="#f3cb36" stroke-width="4"/><path d="M-12 -28 L-5 -10 M0 -28 V-10 M12 -28 L5 -10" stroke="#123b70" stroke-width="3"/></g>
 <rect x="55" y="935" width="790" height="170" rx="18" fill="#123b70"/><text x="85" y="978" font-family="Arial" font-size="20" font-weight="900" letter-spacing="3" fill="#f3cb36">SHOT SHAPE</text><text x="85" y="1024" font-family="Arial" font-size="27" font-weight="900" fill="#fff">Straight</text><text x="85" y="1066" font-family="Arial" font-size="19" fill="#dcecff">Water carry of 70 ft to a peninsula basket (−20%); water landin…</text><text x="450" y="1148" text-anchor="middle" font-family="Georgia,serif" font-size="28" font-weight="bold" font-style="italic" fill="#123b70">Play Disc Golf!</text><g id="complete-hole-details"><rect x="42" y="995" width="816" height="112" rx="12" fill="#173f3a" stroke="#b2c957" stroke-width="3"/><text x="60" y="1025" font-family="Arial,sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#b2c957">SHOT DETAILS &amp; MODIFIERS</text><text x="60" y="1050" font-family="Arial,sans-serif" font-size="18" font-weight="900" fill="#fff">Water carry 70 ft to peninsula basket; −20%. Water miss: +1</text><text x="60" y="1070" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#fff">penalty stroke, throw from near DZ.</text></g></svg>
