@@ -14,13 +14,13 @@
 <!-- Tee-to-basket shot line -->
 <path d="M450 840 L625 545" fill="none" stroke="#fff5c7" stroke-width="30" stroke-linecap="round" opacity=".8"/>
 <path d="M450 840 L625 545" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="14 12" stroke-linecap="round"/>
-<!-- Drop zone on the far side of the water, 66 ft from basket -->
+<!-- Drop zone placed to the right of the basket; labeled 66 ft away -->
 <g id="drop-zone">
-<path d="M520 700 L600 590" fill="none" stroke="#f3cb36" stroke-width="4" stroke-dasharray="7 7"/>
-<rect x="490" y="750" width="110" height="44" rx="8" fill="#f3cb36" stroke="#123b70" stroke-width="3"/>
-<text x="545" y="779" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="900" fill="#123b70">DZ</text>
-<rect x="610" y="615" width="180" height="40" rx="9" fill="#fffdf4" stroke="#f3cb36" stroke-width="3"/>
-<text x="700" y="641" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="900" fill="#123b70">66 FT TO BASKET</text>
+<path d="M650 560 L752 600" fill="none" stroke="#f3cb36" stroke-width="4" stroke-dasharray="7 7"/>
+<rect x="738" y="578" width="68" height="42" rx="8" fill="#f3cb36" stroke="#123b70" stroke-width="3"/>
+<text x="772" y="606" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" font-weight="900" fill="#123b70">DZ</text>
+<rect x="630" y="650" width="180" height="40" rx="9" fill="#fffdf4" stroke="#f3cb36" stroke-width="3"/>
+<text x="720" y="676" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="900" fill="#123b70">DZ: 66 FT AWAY</text>
 </g>
 <!-- Approximate 70 ft separation from pond to basket -->
 <path d="M520 650 L604 570" fill="none" stroke="#fffdf4" stroke-width="4" stroke-dasharray="8 7"/>
@@ -36,4 +36,4 @@
 
 <rect x="432" y="830" width="36" height="48" rx="5" fill="#e8eef2" stroke="#123b70" stroke-width="4"/><text x="450" y="865" text-anchor="middle" font-family="Arial" font-size="13" font-weight="900" fill="#123b70">TEE</text>
 <g transform="translate(625 545)"><ellipse cx="0" cy="28" rx="28" ry="7" fill="#173c31"/><path d="M-19 0 H19 L14 28 H-14Z" fill="#f3cb36" stroke="#123b70" stroke-width="3"/><path d="M-24 -8 H24 L19 0 H-19Z" fill="#fff0a3" stroke="#123b70" stroke-width="3"/><path d="M-17 -8 L-12 -29 H12 L17 -8" fill="none" stroke="#f3cb36" stroke-width="4"/><path d="M-12 -28 L-5 -10 M0 -28 V-10 M12 -28 L5 -10" stroke="#123b70" stroke-width="3"/></g>
-<rect x="55" y="935" width="790" height="170" rx="18" fill="#123b70"/><text x="85" y="978" font-family="Arial" font-size="20" font-weight="900" letter-spacing="3" fill="#f3cb36">SHOT SHAPE</text><text x="85" y="1024" font-family="Arial" font-size="27" font-weight="900" fill="#fff">Straight</text><text x="85" y="1066" font-family="Arial" font-size="19" fill="#dcecff">Water carry of 70 ft to a peninsula basket (−20%); water landin…</text><text x="450" y="1148" text-anchor="middle" font-family="Georgia,serif" font-size="28" font-weight="bold" font-style="italic" fill="#123b70">Play Disc Golf!</text><g id="complete-hole-details"><rect x="42" y="995" width="816" height="112" rx="12" fill="#173f3a" stroke="#b2c957" stroke-width="3"/><text x="60" y="1025" font-family="Arial,sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#b2c957">SHOT DETAILS &amp; MODIFIERS</text><text x="60" y="1050" font-family="Arial,sans-serif" font-size="18" font-weight="900" fill="#fff">Water carry 70 ft to peninsula basket; −20%. Water miss: +1</text><text x="60" y="1070" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#fff">penalty stroke, throw from near DZ.</text></g></svg>
+<rect x="55" y="935" width="790" height="170" rx="18" fill="#123b70"/><text x="85" y="978" font-family="Arial" font-size="20" font-weight="900" letter-spacing="3" fill="#f3cb36">SHOT SHAPE</text><text x="85" y="1024" font-family="Arial" font-size="27" font-weight="900" fill="#fff">Straight</text><text x="85" y="1066" font-family="Arial" font-size="19" fill="#dcecff">Water carry of 70 ft to a peninsula basket (−20%); water landin…</text><text x="450" y="1148" text-anchor="middle" font-family="Georgia,serif" font-size="28" font-weight="bold" font-style="italic" fill="#123b70">Play Disc Golf!</text><g id="complete-hole-details"><rect x="42" y="995" width="816" height="112" rx="12" fill="#173f3a" stroke="#b2c957" stroke-width="3"/><text x="60" y="1025" font-family="Arial,sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#b2c957">SHOT DETAILS &amp; MODIFIERS</text><text x="60" y="1050" font-family="Arial,sans-serif" font-size="18" font-weight="900" fill="#fff">Water carry 70 ft to peninsula basket; −20%. Water miss: +1</text><text x="60" y="1070" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#fff">penalty stroke, throw from DZ.</text><text x="60" y="1092" font-family="Arial,sans-serif" font-size="16" font-weight="800" fill="#f3cb36">Drop Zone is 66 ft from the basket.</text></g></svg>
