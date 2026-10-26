@@ -7,8 +7,32 @@
 <rect x="305" y="255" width="250" height="130" rx="16" fill="#eaf2f8" stroke="#a8c2d7" stroke-width="3"/><text x="330" y="296" font-family="Arial" font-size="20" font-weight="800" fill="#53677a">PAR</text><text x="330" y="362" font-family="Arial" font-size="56" font-weight="900" fill="#123b70">4</text>
 <rect x="575" y="255" width="270" height="130" rx="16" fill="#eaf2f8" stroke="#a8c2d7" stroke-width="3"/><text x="600" y="296" font-family="Arial" font-size="20" font-weight="800" fill="#53677a">DISTANCE</text><text x="600" y="350" font-family="Arial" font-size="40" font-weight="900" fill="#123b70">420 ft</text>
 <rect x="55" y="405" width="790" height="510" rx="18" fill="#174e43"/><rect x="72" y="422" width="756" height="476" rx="12" fill="url(#field)"/><path d="M110 440 Q220 470 300 440 T500 440 T790 440 M110 880 Q220 850 300 880 T500 880 T790 880" fill="none" stroke="#c7e3a8" stroke-width="7" opacity=".65"/>
-<circle cx='340' cy='650' r='24'/><circle cx='370' cy='580' r='24'/><circle cx='590' cy='650' r='24'/><circle cx='600' cy='580' r='24'/>
-<path d="M450 840 L450 720 C450 665 500 625 520 570 L550 500" fill="none" stroke="#fff5c7" stroke-width="48" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/><path d="M450 840 L450 720 C450 665 500 625 520 570 L550 500" fill="none" stroke="#fff" stroke-width="7" stroke-dasharray="16 13" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="split-fairway-routes">
+<!-- Safe, open left fairway: longer route -->
+<path d="M450 840 C420 760 355 700 320 625 S340 535 450 500" fill="none" stroke="#fff5c7" stroke-width="44" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
+<path d="M450 840 C420 760 355 700 320 625 S340 535 450 500" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="15 13" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- Aggressive right fairway, pinched through a narrow tree gap -->
+<path d="M450 840 C510 770 610 700 620 625 S590 545 450 500" fill="none" stroke="#fff5c7" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" opacity=".8"/>
+<path d="M450 840 C510 770 610 700 620 625 S590 545 450 500" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="15 13" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- Clearly visible trees framing the narrow 12 ft gap on the right route -->
+<g stroke="#17452f" stroke-width="4">
+<path d="M555 570 L555 615 M535 590 L555 570 L575 590" fill="none" stroke="#68482c" stroke-width="8" stroke-linecap="round"/>
+<circle cx="555" cy="560" r="24" fill="#236343"/>
+<path d="M650 570 L650 615 M630 590 L650 570 L670 590" fill="none" stroke="#68482c" stroke-width="8" stroke-linecap="round"/>
+<circle cx="650" cy="560" r="24" fill="#236343"/>
+<path d="M580 680 L580 718 M562 700 L580 680 L598 700" fill="none" stroke="#68482c" stroke-width="7" stroke-linecap="round"/>
+<circle cx="580" cy="670" r="21" fill="#2b7048"/>
+<path d="M700 680 L700 718 M682 700 L700 680 L718 700" fill="none" stroke="#68482c" stroke-width="7" stroke-linecap="round"/>
+<circle cx="700" cy="670" r="21" fill="#2b7048"/>
+</g>
+<g font-family="Arial,sans-serif" font-weight="900" text-anchor="middle">
+<rect x="95" y="490" width="210" height="42" rx="10" fill="#fffdf4" stroke="#236343" stroke-width="3"/>
+<text x="200" y="517" font-size="18" fill="#17452f">SAFE LEFT · 470 FT</text>
+<rect x="570" y="450" width="225" height="42" rx="10" fill="#fffdf4" stroke="#b44b43" stroke-width="3"/>
+<text x="682" y="477" font-size="17" fill="#8c3029">RISKY RIGHT · 420 FT</text>
+<text x="605" y="530" font-size="15" fill="#fff">12 FT GAP</text>
+</g>
+</g>
 <rect x="432" y="830" width="36" height="48" rx="5" fill="#e8eef2" stroke="#123b70" stroke-width="4"/><text x="450" y="865" text-anchor="middle" font-family="Arial" font-size="13" font-weight="900" fill="#123b70">TEE</text>
-<g transform="translate(550 500)"><ellipse cx="0" cy="28" rx="28" ry="7" fill="#173c31"/><path d="M-19 0 H19 L14 28 H-14Z" fill="#f3cb36" stroke="#123b70" stroke-width="3"/><path d="M-24 -8 H24 L19 0 H-19Z" fill="#fff0a3" stroke="#123b70" stroke-width="3"/><path d="M-17 -8 L-12 -29 H12 L17 -8" fill="none" stroke="#f3cb36" stroke-width="4"/><path d="M-12 -28 L-5 -10 M0 -28 V-10 M12 -28 L5 -10" stroke="#123b70" stroke-width="3"/></g>
+<g transform="translate(450 500)"><ellipse cx="0" cy="28" rx="28" ry="7" fill="#173c31"/><path d="M-19 0 H19 L14 28 H-14Z" fill="#f3cb36" stroke="#123b70" stroke-width="3"/><path d="M-24 -8 H24 L19 0 H-19Z" fill="#fff0a3" stroke="#123b70" stroke-width="3"/><path d="M-17 -8 L-12 -29 H12 L17 -8" fill="none" stroke="#f3cb36" stroke-width="4"/><path d="M-12 -28 L-5 -10 M0 -28 V-10 M12 -28 L5 -10" stroke="#123b70" stroke-width="3"/></g>
 <rect x="55" y="935" width="790" height="170" rx="18" fill="#123b70"/><text x="85" y="978" font-family="Arial" font-size="20" font-weight="900" letter-spacing="3" fill="#f3cb36">SHOT SHAPE</text><text x="85" y="1024" font-family="Arial" font-size="27" font-weight="900" fill="#fff">Split Fairway</text><text x="85" y="1066" font-family="Arial" font-size="19" fill="#dcecff">SIGNATURE HOLE — choose safe left route (470 ft, no modifier) o…</text><text x="450" y="1148" text-anchor="middle" font-family="Georgia,serif" font-size="28" font-weight="bold" font-style="italic" fill="#123b70">Play Disc Golf!</text><g id="complete-hole-details"><rect x="42" y="995" width="816" height="112" rx="12" fill="#123b70" stroke="#f3cb36" stroke-width="3"/><text x="60" y="1025" font-family="Arial,sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#f3cb36">SHOT DETAILS &amp; MODIFIERS</text><text x="60" y="1050" font-family="Arial,sans-serif" font-size="18" font-weight="900" fill="#fff">SIGNATURE SPLIT FAIRWAY: safe left route 470 ft, no</text><text x="60" y="1070" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#fff">modifier; aggressive right route 420 ft through 12 ft gap,</text><text x="60" y="1090" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#fff">−30%. Choose route before throw.</text></g></svg>
