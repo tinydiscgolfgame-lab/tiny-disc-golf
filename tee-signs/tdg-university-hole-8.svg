@@ -16,6 +16,7 @@
 <path d="M95 650 Q250 625 380 650 T805 650 L805 710 Q650 685 520 710 T95 710Z" fill="#389db3" stroke="#d8f5f5" stroke-width="4"/>
 <path d="M105 680 H795" stroke="#d8f5f5" stroke-width="3" stroke-dasharray="10 8" opacity=".9"/>
 <rect x="285" y="662" width="330" height="36" rx="8" fill="#fff" stroke="#c39b58" stroke-width="3"/><text x="450" y="686" text-anchor="middle" class="label">100 FT WATER CARRY</text>
+<rect x="230" y="728" width="440" height="36" rx="8" fill="#fff" stroke="#c39b58" stroke-width="3"/><text x="450" y="752" text-anchor="middle" class="label">WATER BEGINS 400 FT FROM TEE</text>
 <!-- Uphill finish contours -->
 <path d="M340 545 Q480 515 620 545" fill="none" stroke="#275d49" stroke-width="8"/>
 <path d="M365 515 Q480 488 595 515" fill="none" stroke="#275d49" stroke-width="8"/>
