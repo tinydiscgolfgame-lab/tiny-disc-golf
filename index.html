@@ -503,7 +503,7 @@ function renderCourses(){
     const edit=document.createElement('button');edit.className='secondary';edit.style.marginTop='8px';edit.textContent='Edit Course';edit.onclick=()=>{editingCourseId=c.id;renderCourseEditor(c)};
     const exp=document.createElement('button');exp.className='secondary';exp.style.marginTop='6px';exp.textContent='Export Course';exp.onclick=()=>exportCourse(c);
     const del=document.createElement('button');del.className='secondary';del.style.marginTop='6px';del.textContent='Delete Course';del.onclick=()=>{if(window.confirm('Delete '+c.name+'?')){savedCourses=savedCourses.filter(x=>x.id!==c.id);localStorage.setItem('tinyCourses',JSON.stringify(savedCourses));if(editingCourseId===c.id){editingCourseId=null;$('#courseName').value='';courseEditorHoles=9;renderCourseEditor()}renderCourses()}};
-    d.append(edit,exp,del);box.appendChild(d);
+    d.append(edit,exp,del);d.querySelectorAll('a,button').forEach(el=>{if(el.textContent.trim()==='View Hole 1 Tee Sign')el.remove()});box.appendChild(d);
   });
 }
 function exportCourse(course){
