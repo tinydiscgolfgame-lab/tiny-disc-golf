@@ -28,10 +28,10 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
+          import re
 
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          header = "Power\tPutter\n(Speed 1-3)\tMidrange\n(Speed 4-6)\tFairway\n(Speed 7-9)\tDriver\n(Speed 10-14)"
           table = """Power\tPutter (Speed 1-3)\tMidrange (Speed 4-6)\tFairway (Speed 7-9)\tDriver (Speed 10-14)
 0 to 5\t75\t100\t0\t0
 6 to 10\t125\t150\t175\t200
@@ -43,13 +43,10 @@ jobs:
 36 to 40\t725\t750\t775\t800
 41 to 45\t825\t850\t875\t900
 46 to 50\t925\t950\t975\t100"""
-          if header not in s:
-              raise SystemExit('Rules Distance Limit table header not found.')
-          start = s.index(header)
-          end = s.find("\n\nCONTROL", start)
-          if end == -1:
-              raise SystemExit('Rules Distance Limit table end marker not found.')
-          s = s[:start] + table + s[end:]
+          pattern = re.compile(r"(There are limits to distances you can throw, based on your Power and the type of disc you’re throwing, as seen in the following chart\.\s*)(Power\s+Putter\s*\(Speed 1-3\).*?46 to 50\s+925\s+950\s+975\s+100)(\s*\n\s*CONTROL)", re.S)
+          s, count = pattern.subn(lambda m: m.group(1) + table + m.group(3), s, count=1)
+          if count != 1:
+              raise SystemExit(f'Rules Distance Limit table block not found; replacements={count}')
           p.write_text(s, encoding='utf-8')
 
       - name: Apply Reward Roll patch
