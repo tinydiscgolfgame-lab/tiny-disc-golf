@@ -1,0 +1,59 @@
+name: Fix Distance Limit Table
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix-distance-table:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Replace Distance Limit table block
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('index.html')
+          s = path.read_text(encoding='utf-8')
+
+          header = "Power\tPutter\n(Speed 1-3)\tMidrange\n(Speed 4-6)\tFairway\n(Speed 7-9)\tDriver\n(Speed 10-14)"
+          table = """Power\tPutter (Speed 1-3)\tMidrange (Speed 4-6)\tFairway (Speed 7-9)\tDriver (Speed 10-14)
+0 to 5\t75\t100\t0\t0
+6 to 10\t125\t150\t175\t200
+11 to 15\t225\t250\t275\t300
+16 to 20\t325\t350\t375\t400
+21 to 25\t425\t450\t475\t500
+26 to 30\t525\t550\t575\t600
+31 to 35\t625\t650\t675\t700
+36 to 40\t725\t750\t775\t800
+41 to 45\t825\t850\t875\t900
+46 to 50\t925\t950\t975\t100"""
+
+          if header not in s:
+              raise SystemExit('Distance Limit table header not found exactly; no changes made.')
+
+          end_marker = "\n\nTo determine"
+          start = s.index(header)
+          end = s.find(end_marker, start)
+          if end == -1:
+              raise SystemExit('Could not locate the end of the Distance Limit table block.')
+
+          s = s[:start] + table + s[end:]
+          path.write_text(s, encoding='utf-8')
+
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && { echo 'No changes needed'; exit 0; }
+          git commit -m "Fix Distance Limit table formatting"
+          git push
