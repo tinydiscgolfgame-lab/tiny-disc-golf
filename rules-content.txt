@@ -1,0 +1,189 @@
+Introduction
+	In the Tiny Disc Golf Universe, you can play wherever you want to, whenever you want to and have as much fun as you want to!  First, you need to make a Player and then you need to create your Bag.  After that, you’re ready to take on any tiny hole you can imagine!  Before we create a Player, let’s look at the basic Player Stats and Disc Stats and how they are used in the game.  Success Rolls or Percentage Rolls are used to determine if you were successful in a throw/putt or not, and by how off you were from being successful.  
+
+                 Here’s the basic flow of play after creating your Player and building your Bag…
+	
+1-Find a fun spot to throw as many holes as you want or have time for
+	
+2-Choose a disc and use its real-life Disc Stats/Flight Numbers and your Power Stat (and any modifiers) to determine the distance and flight path you can throw on each hole
+	
+3-Now, use your Control Stat (and any modifiers) to determine how close to the target your throw has landed
+	
+4-If you aren’t within Circle 2 of the basket, then you repeat the 2 previous steps, but if you’re within 6.6” (66 feet in real distance because each inch of play equals 10 feet), then you can attempt to putt
+	
+5-Use your Putting Stat and the distance from the basket to determine how easy your putt is 
+	
+6-Sink the putt and move to the next hole
+	Play with your friends or practice by yourself to get your Player Stats and TDGA Rating up!   
+Player Stats
+	Each Player is defined by 4 Main Stats; Power, Control, Putting and Luck.  These stats are used to determine how easy or hard a specific throw or putt is, in the process of completing a hole.
+	Power determines the distance you can throw a disc, along with the disc Speed
+	Control determines how close to the target you land
+	Putting determines difficulty of a putt within Circle 1 (0-33’) or Circle 2 (33-66’)
+	Luck is used to augment other stats when a clutch throw or putt is needed	
+
+Disc Stats/Flight Numbers
+	Just like in real life, you can play TDG with your favorite discs from your favorite manufacturers!!!  The Flight Numbers are Speed, Glide, Turn and Fade.  These numbers will be used while determining the flight path you’re trying to take on each hole…determining the discs in your Bag is very important to make sure you can make most shots!  
+	Speed determines how fast the disc flies and, with Power, its maximum distance
+	Glide relatively determines how long the disc stays in the air, adding to distance
+	Turn determines how far the disc moves laterally, initially after the throw
+	Fade determines how far the disc moves laterally, near the end of the throw
+Basics of How to Play 
+Playing a round of TDG should be fast and fluid!  Once you become accustomed to the TDG App, your Player’s Stats and Flight Numbers of the discs in your Bag, determining your Success Roll target becomes quick and easy.  Don’t forget that the basic tools needed to play besides the TDG App, something to represent the basket and your Player and a place to play is a tape measure.  Below are the basic steps of playing the game.. 
+
+1.	Lay out the entire course or layout a few holes at a time or even just 1 hole at a time, don’t forget that each inch on your hole/course equals 10 feet in real life
+2.	Determine what disc your Player wants to throw off of the tee, based on the Flight Path, Turn and Fade, needed to be taken and the Distance the disc needs to travel
+3.	 Determine the Distance your Player can throw, whichever disc you’d like, off of the tee by using the Player’s Power Stat and the Disc’s Speed Stat, along with the Glide of the disc
+4.	Determine the Control your Player has on that disc by using your Player’s Control Stat and the Disc’s Speed Stat to determine a target number/percent for a Success Roll
+5.	Roll 2 10-sided dice to determine your Success Roll…if you roll under your target, then you landed right where you were expecting!  But if you miss your Success Roll, then you didn’t land where you wanted to and depending on how far off from the target number you are will determine how far away from the target your disc lands
+6.	If you were unsuccessful in your Success Roll, then use an Arrow Spinner to determine which direction the disc was off in and determine how far off it was by how far away from your target you rolled 
+
+Success Rolls
+To determine if you are successful at whatever you are trying to do in TDG, you have to make a Success Roll.  A Success Roll is based off of the percent chance that you will be successful and is determined by many different variables, called Modifiers.  You will use Success Rolls when you are determining the Control of the disc, as you drive and throw, and while Putting the disc.  While throwing the disc, you’ll use your Control and the disc’s Speed to determine your base percent chance at a Success Roll and then many different things can modify that base Success Roll, like your Player’s Stats, your discs stats, the current conditions, the uniqueness of the hole, your nervousness while throwing a legendary course for the first time, etc.  After reaching Circle 1 or 2, your distance away from the basket, in feet, and your Putting Stat, determines your baseline percent chance of a Success Roll and then many different things can modify your putt, just like your throw.   A list of all modifiers is listed elsewhere in this book.  Luck can also change the chance of a Success Roll by +10% for every Luck Point per round. 
+
+Hole Stats
+Each hole presents different difficulties and uniqueness to the game, that affects how easy or hard the hole is, compared to others.  Some holes have a general difficulty rating that will change the stats and target numbers for your success rolls.  Some holes have specific obstacles that only affect the target numbers if you encounter them, like trees, boulders, buildings or artificial obstacles like a triple Mando, bales of hay or a hanging/elevated basket.  For every 1 inch in real terrain, there are 10 feet in TDG terrain, unless the hole is moving uphill (1 inch = 5 feet) or downhill (1 inch = 15 feet).  Hole Stats can apply to the entire Hole or just part of the Hole.  Common Hole Stats effect either/and/or Drives, Approaches and Putts, depending on where the most challenging part of the Hole might be.
+
+Course Conditions
+Course Conditions can change any course, at any point in a round that it’s desired, to make it slightly easier or more difficult.  Things like wind, rain, snow, brightness/darkness, glow rounds, slippery conditions, perfect conditions or being filmed on the Lead Card can all have an effect on the Hole and the Player.  
+Course Stats
+Some courses are legendary for being extremely difficult or extremely easy, and the Course Stats are sometimes used to reflect this.  Maybe the wind is notorious for causing trouble, the footing is terrible or the baskets always seem to catch a bunch of Aces, Course Stats can augment any and all Player, Disc or Hole stats to produce a truly unique TDG experience!  Many times, Course Stats are a bundle of Course Conditions and Hole Stats that are used for each hole, sometime along with other Hole Stats still being applied.
+Player Creation
+To play the game, you need to create a Player.  Your Player can be just like you, but a tiny version, or you can make a Player like none other in Disc Golf!  The basic steps of Player Creation are simple, determine your Player Stats and then build your Bag.   
+
+Player Stats
+Each Player has their own 4 Main Stats; Power, Control, Putting and Luck.  These stats are used to determine how easy or hard a specific throw or putt is, in the process of completing a hole.  Along with these 4 stats, Players must decide if they are Right Handed or Left Handed. Throwing with the opposite hand is obviously harder and so comes with a penalty.  Players must also determine if they are Backhand or Forehand (Sidearm) dominant.  This will determine the main flight paths the Player will take on most holes and using the opposite style will be harder and come with a slight penalty. 
+
+Power determines the distance you can throw a disc, along with the Speed of the disc*
+
+Control determines how close to the target you land
+
+Putting determines the difficulty of a putt within Circle 1 (0-33’) or Circle 2 (33-66’)*
+
+Luck is used to augment other stats when a clutch throw or putt is needed*
+	
+Determining you Player’s starting stats…
+
+1. Each Player has a total of 40 Stat Points to distribute among their 4 Main Stats.  Read about each stat and understand how they are used in order to create an effective Player!
+
+2. Decide if the Player is Right or Left Handed
+
+3. Decide if the Player is Backhand or Forehand Dominant
+
+4. Add these details, along with the discs in your Bag and any Accessories, to your Player’s Pass to keep track of them as your Player gets better 
+
+-Throwing non-dominant BH v FH style = -10% to Power and Control
+
+-Throwing with opposite hand = -40% to Power and Control
+
+ 
+Experience or TDGA Rating
+After playing each round, a Player gains experience and their rating may go up, or down, depending on how they played during that round.  As well as gaining Ratings points, a Player gains Stat Points that they can use to increase the Player’s Stats.
+ 
+Stat Points
+If a Player finishes their round (minimum of 9 holes) above par, they don’t gain any Stat Points.  But, if a Player is under par for a round, they gain 1 Stat Point that can be added to either their Power, Control, Putting or Luck Stat.  If a Player throws a Perfect Round (-9 or birdied every hole on a 9-hole course) then they gain 5 Stat Points!  This reward is only available once per course, so you can’t just wear out the beginner course over and over again in order to get Stat Points.  
+Rating
+Your Player begins their career with a Tiny Disc Golf Association (or TDGA) Rating of 800 and it increase by 1 for every throw under par you are for each round you play.  Your Rating never goes down, it can only go up!  This Rating is similar to a PDGA Rating, but not calculated the same way and doesn’t represent the same skill levels that a PDGA Rating might imply, only a total level of experience in playing TDG.
+So, if you throw the First Course later in this book and end up with a -9, you gain 5 Stat Points to increase your Stats and your Player Rating goes up by 9 points to 809. 
+Building Your Bag
+When your Player is created, you also create your Player’s first Bag of Discs by choosing your 6 favorite discs in real life!  Your Player will use this set of 6 discs to shape and throw all of the shots they might encounter on a course, so having a good variety of Flight Paths/Flight Numbers is very important.  If you don’t know the Flight Numbers of your favorite discs, you can easily search for them on the Internet.  As your Player gains experience and increases their TDGA Rating, they will gain more slots in the Bag so they can carry more discs….every 20 point increase in Rating adds 1 more slot for a disc in the Bag! Along with discs, there are other accessories, or Gear, that can be earned to increase your Success Rolls.  Gear like chalk/hand driers, towels, shoes, umbrellas and rangefinders all improve your success.  A Player can only use a total of 5 Accessories during a Round, in combination with each other, so collecting and choosing which Accessories to take on the course can make a huge difference!  Once you determine your Bag of discs or earn Gear, add this to your Player’s Pass so you’ll have their details nearby while playing the game.
+
+ 
+Flight Numbers or Disc Stats
+Just like in real life, you can play TDG with your favorite discs from your favorite manufacturers!!!  The Flight Numbers are Speed, Glide, Turn and Fade.  These numbers can be used while determining the flight path you’re trying to take on each hole, so determining the discs in your Bag’s limited slots is extremely important to make sure you can make most shots!  Speed and Glide determine the Distance a disc can travel and Turn and Fade are used to shape shots around objects.  If a Player isn’t forced to “shape a shot”, for example for a wide-open hole, then there’s no need to worry about the Turn and Fade of the disc. Different plastics don’t make a difference in the discs you choose, unless they have different Flight Numbers in real life.  The wear on the disc doesn’t affect its Flight Path either in TDG.   As you play the game, you may be rewarded with discs (by winning rounds, special events or tournaments) with Special Abilities that can increase you Success Rolls!
+
+Speed determines how fast the disc flies and along with Power how far you can throw
+-Disc Speed ranges from 1 to 14 currently
+-A Player can only throw a disc with a Speed lower than their Power
+-The higher the Speed of a disc, the less Control a Player has with that disc
+
+Glide relatively determines how long the disc stays in the air, adding to distance
+-Disc Glide ranges from 1 to 7 currently
+-Glide will make a disc fly farther by adding Glide x 10 feet to each drive and Glide x 5 feet for other throws, making it possible to throw a little farther
+
+Turn determines how far the disc moves initially after the throw
+-Disc Turn ranges from +1 to -5 currently…discs with a Turn of -4 or -5 are tougher to control and give a -10% to Control Success Rolls
+-Turn will force the initial flight path of a throw to move to the right (for RHBH, left for LHBH) equal to the Turn x 2 inches (20 feet in real life)
+-Turn can be envisioned as an arc from the Player’s throwing position to the point 2/3 of the way through the overall throw 
+
+Fade determines how far the disc moves near the end of the throw*
+-Disc Fade ranges from 0 to 5 currently…discs with a Fade of 4 or 5 are tougher to control and give a -10% to Control Success Rolls
+-Fade will force the end of the flight path of a throw to dump to the left (for RHBH, left for LHBH) equal to Fade x 2 inches (20 feet in real life)
+-Fade can be envisioned as an arc from the end of the Turn pattern (the point 2/3 of the way through the overall throw) to the final target of the throw 
+How to Play a Hole
+There are 2 main phases of each throw, determine the Distance you want to throw and then determine your Control and how close you are to the target.  Beginning with your Drive off of the tee pad, you will follow these steps for any throw besides Putting.
+DISTANCE
+For each hole, determine the tee pad location and basket location. Each inch of game distance between the tee and basket is equivalent to 10 feet, if you were on a real disc golf course. For uphill, each inch is equivalent to 15 feet and downhill is equivalent to 5 feet.  To determine how far a throw flies, use your Power and multiply it by 20 to determine how many feet you can throw.  On drives, add the Glide of the disc multiplied by 10 to the distance and on other throws, add the Glide times 5 to the distance to determine the final distance of the throw. A player cannot use a disc with a higher Speed than that player’s Power.  So, if your Power is a 10, you can only use discs with a Speed of 10 or lower.  
+So, for example, if you’re throwing a drive off the tee with a 12 Speed Driver with 6 Glide and your Power is a 12, then your maximum distance would be 12 x 20 = 240 and then 240 + (6 x 10) = 300 possible feet thrown with that driver off of the tee.  There are limits to distances you can throw, based on your Power and the type of disc you’re throwing, as seen in the following chart.
+Power	Putter
+(Speed 1-3)	Midrange
+(Speed 4-6)	Fairway
+(Speed 7-9)	Driver
+(Speed 10-14)
+0 to 5	75	100	0	0
+6 to 10	125	150	175	200
+11 to 15	225	250	275	300
+16 to 20	325	350	375	400
+21 to 25	425	450	475	500
+26 to 30	525	550	575	600
+31 to 35	625	650	675	700
+36 to 40	725	750	775	800
+41 to 45	825	850	875	900
+46 to 50	925	950	975	100
+
+CONTROL
+To determine how close a throw comes to its target or the basket, subtract the Speed of the Disc from your Control and multiply by 5 to determine the target number for your Success Roll.  This means that the higher the Speed, the less Control you will have with that disc.  If you do not make your Success Roll, then the disc will land in a random direction, determined by a Spinning Arrow and so many feet away, determined by how far away you missed your Success Roll.  For every 10 Success Points away from reaching the target, the disc lands 1 inch (10 feet in a real game) away from the target.  If a Success Throw is ever a 1 and the Player has the Distance for the hole, then the Player just threw an Ace and got a hole in one!  If the Success Roll is ever a 100, then there is a dramatic failure and the disc has landed farther from the basket with multiple obstacles in the way.  A player cannot use a disc with a higher Speed than that player’s Control.  
+So, for example, if you’re throwing the same 12 Speed Driver with a Control of 25, then your target for your Success Roll is 25 – 12 = 13 and then 13 x 5 = 65%.  If you roll a Success Roll and come up with a 65 or less, then you land within an inch of your target.  If you roll higher than a 65, then you failed.  After a Success Roll, the result was a 98, so the throw was off the mark.  To determine how far off it was, subtract the target from the roll and divide by 10…or 98 – 65 = 33 and then 33 (ft)/10 = 3.3 inches away.  To determine the direction the throw was off, use a Spinning Arrow and move from the target in that direction the total distance the throw was off.
+PUTTING
+After reaching Circle 2 or within 7 inches of the basket, a player can only putt, unless it’s on an uphill or downhill lie.  Usually Circle 2 is 66 feet to 33 feet zone around the basket and Circle 1 is a zone between 0 to 33 feet, so in TDG, Circle 2 is between 3.5”-7” from the basket and Circle 1 is from 0-3.5”.  As you move farther from the basket, your chances of sinking the putt get worse.  There is a baseline chance of sinking a putt from Circle 1 and 2 and then the Player’s Putting stat either adds or subtracts to the chance of making the putt.  To determine the baseline target for the Putt, subtract the number of inches away from the basket times 10 and subtract that from 100.  So, if you’re 1.4 inches away (or 14 feet away in a real game) then the baseline target is 100 – 14 or 86%.  If you have a Putting stat of 10, then there is no modifier to your Putt and you use the baseline chance for you target on a Success Roll.  If your Putting stat is below 10, the Putt becomes harder and if its above 10, it becomes easier.  For each Putt stat point below 10, subtract that number times 5 to the percent for the Success Roll.  For each Putt stat point above 10, add that number times 5 to the percent for the Success Roll.  If the Putt is not made, then the disc lands the difference in your Success Roll divided by 10 in inches away from the basket and you Putt again.
+So, for example, if you are 4.2” away from the basket, or 42 feet in a real life game, then your baseline for making the shot is 58% or 100- 48.  Your Player’s Putt stat is an 8, so that makes the Putt 10% tougher, giving a final Success Roll target of 58 – 10 or 48% chance of making the Putt.  The Player rolls a Success Roll and comes up with a 32, so they were successful in their attempt, but then their buddy right beside them with the same Putt stat of 8 came up with a 63 on their Success Roll, so they missed the Putt and it landed 63 – 48 = 15 and then 15 / 10 = 1.5 inches away.  Player 2 then Putts again with a target of 100 – 15 = 85 – 10 (for their Putt stat of 8) = 75%.  Player 2 then rolls another 63 and makes their second Putt.
+ 
+Luck
+Don’t forget about the Player’s Luck Stat and how it can help with those crucial throws or putts in the middle of the game!  Each Luck point a Player has represents a Success Roll Modifier of +10%, and can be used on any Success Roll for either a Drive, Approach or Putt during your round.  A Player can use each 10% on its own for as many throws as the Player has Luck Points, or can combine Luck Points for a bigger modifier.  So, if a Player has 6 Luck Points, that Player can add +10% to 6 different Success Rolls, or they could add them all onto 1 crucial throw for a total of +60% to that 1 throw, or any combination in between like +30% on a throw, +20% on another throw and +10% on a third.  Any combination is acceptable, but a Player only has a total number of Luck Points to use for the entire round, so use them wisely!!! 
+
+Typical Success Roll Modifiers
+
+-Throwing non-dominant BH v FH style = -10% to Power and Control
+-Throwing with opposite hand = -40% to Power and Control
+-Throwing for more Power than usual = + 10% to possible Distance but sacrifices -10% to Control 
+-Throwing for more Control = +10% to Control Success Roll but sacrifices -10% of the possible Distance that can be thrown
+Adding extra Hyzer or Anhyzer or a unique flight path like a Hyzer Flip, Flex Turnover, Roller, Tomahawk or Thumber makes throws harder as well.  
+
+-Adding extra Hyzer or Anhyzer to a throw = -10% 
+-Hyzer Flip = -15% but adds 10% to distance 
+-Flex Turnover = -20% 
+-Spike Hyzer, Tomahawk or Thumber = - 20% but can go over tall obstacles
+-Roller = -25% to Control but adds +20% to Distance
+
+Hole Stats
+Each hole presents different difficulties and uniqueness to the game, that affects how easy or hard the hole is compared to others.  Some holes have a general difficulty rating that will change the stats and target numbers for your success rolls.  Some holes have specific obstacles that only affect the target numbers if you encounter them, like trees, boulders, buildings or artificial obstacles like a triple Mando, bales of hay or a hanging/elevated basket.  For every 1 inch in real terrain, there are 10 feet in TDG terrain, unless the hole is moving uphill (1 inch = 5 feet) or downhill (1 inch = 15 feet).  
+ 
+Below is a general list of obstacles and their effects on a throws chance of succeeding:
+-Small tree/boulder or obstacle = -10% for each obstacle in the way
+-Large tree/boulder or obstacle = -20% for each obstacle in the way
+-Mando = -10%		-Double Mando = -20%	
+-Triple Mando = -30%
+-Elevated Basket up to 10 feet = -10%
+-Elevated Basket up to 20 feet = -20%
+-Small water hazard = -10%
+-Medium water hazard = - 20%
+-Big water hazard = 30%
+-OB line nearby = -10%
+
+Course Conditions
+Course Conditions can change any course, at any point in a round that it’s desired, to make it slightly easier or more difficult.  Things like wind, rain, snow, brightness/darkness, glow rounds, slippery conditions, perfect conditions or being filmed on the Lead Card can all have an effect on the Hole and the Player.  Some common Course Condition changes are noted below:
+-Windy  = -5 to -50%   -Rain = -5 to -50%
+- Snow = -10 to -80%
+-Brightness to Darkness = -5 to -50%
+-Slippery = -5 to -50%
+-Perfect Conditions = +5 to +25%
+Course Stats
+Some courses are legendary for being extremely difficult or extremely easy, and the Course Stats are sometimes used to reflect this.  Maybe the wind is notorious for causing trouble, the footing is terrible or the baskets always seem to catch a bunch of Aces, Course Stats can augment any and all Player, Disc or Hole stats to produce a truly unique TDG experience!  Many times, Course Stats are a bundle of Course Conditions and Hole Stats that are used for each hole, sometime along with other Hole Stats still being applied.
+-Home course = +15%
+-Big tourney = -15%
+-First time playing a course = -10%
+-First time legendary course = -20%      
+-Legendary course = -10%
+Leagues and Tournaments
+As the game gains popularity, there are more weekly Leagues forming, many times after actual real life League Rounds, to provide the opportunity to play the game, improve Players and build more comradery.  Setting up a TDG League during the winter is a great way to hang out with your friends in the evening when you can’t get out and throw after work, so think about forming a League if there’s not one nearby!  Winning each week’s League game is rewarded with a Reward Roll and a special +10% to Success Rolls to help the Player!
+Tournaments are a series of rounds, usually anywhere from 2-8, that provide Players a chance to test their skills against the local TDG Community!  Tournaments can provide bigger opportunities for improvements, but only if you finish the entire Tournament.  Not only does a Tournament give a chance to greatly improve your skills, every Tournament comes with a Player’s Pack that includes at least 1 disc and at least 1 Accessory you can add to your Bag with a Reward Roll on the Reward Chart, that can also improve play!
