@@ -1,0 +1,73 @@
+name: Ensure Rules tab is present
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  ensure-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure Rules tab and panel
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          import subprocess
+
+          path = Path('index.html')
+          index = path.read_text(encoding='utf-8')
+
+          pass_button = '<button class="tab active" data-tab="pass">Player\'s Pass</button>'
+          rules_button = '<button class="tab" data-tab="rules">Rules</button>'
+          if rules_button not in index:
+              if pass_button not in index:
+                  raise SystemExit('Player\'s Pass tab marker not found')
+              index = index.replace(pass_button, pass_button + rules_button, 1)
+
+          if 'id="rules"' not in index:
+              historical = subprocess.check_output([
+                  'git', 'show', '61ce5f250ee0b4d4f07b1c85b18d8f1d21cf4de7:index.html'
+              ], text=True, encoding='utf-8')
+              match = re.search(r'<section id="rules" class="panel">.*?</section>', historical, re.S)
+              if not match:
+                  raise SystemExit('Could not recover the Rules panel from the Rules commit')
+              marker = '<section id="distance" class="panel">'
+              if marker not in index:
+                  raise SystemExit('Distance panel marker not found')
+              index = index.replace(marker, match.group(0) + marker, 1)
+
+          index = index.replace(
+              '.tabs{display:grid;grid-template-columns:repeat(11,1fr)',
+              '.tabs{display:grid;grid-template-columns:repeat(12,1fr)',
+              1
+          )
+
+          if '<!-- Rules tab verified 2026-10-30 -->' not in index:
+              index = index.replace('<!doctype html>', '<!doctype html>\n<!-- Rules tab verified 2026-10-30 -->', 1)
+
+          path.write_text(index, encoding='utf-8')
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "Rules tab already present; no changes needed."
+          else
+            git commit -m "Ensure Rules tab and panel are published"
+            git push
+          fi
+          rm -f .github/workflows/ensure-rules-tab.yml
+          git add .github/workflows/ensure-rules-tab.yml
+          git commit -m "Remove temporary Rules verification workflow"
+          git push
