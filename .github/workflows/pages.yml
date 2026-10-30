@@ -42,25 +42,16 @@ jobs:
 36 to 40\t725\t750\t775\t800
 41 to 45\t825\t850\t875\t900
 46 to 50\t925\t950\t975\t100"""
-          anchor = "There are limits to distances you can throw, based on your Power and the type of disc you’re throwing, as seen in the following chart."
+          anchor = "There are limits to distances you can throw"
           anchor_pos = s.find(anchor)
           if anchor_pos == -1:
-              raise SystemExit('Distance Limit paragraph not found.')
+              raise SystemExit('Distance Limit section not found.')
           start = s.find('Power', anchor_pos)
           end = s.find('\n\nCONTROL', start)
           if start == -1 or end == -1:
               raise SystemExit(f'Distance Limit table boundaries not found: start={start}, end={end}')
           s = s[:start] + table + s[end:]
           p.write_text(s, encoding='utf-8')
-
-      - name: Apply Reward Roll patch
-        run: python scripts/add_reward_roll.py
-
-      - name: Install four new TDG courses
-        run: python scripts/install_four_courses.py
-
-      - name: Add First Course Hole 1 tee sign test
-        run: python scripts/add_tee_sign_test.py
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
