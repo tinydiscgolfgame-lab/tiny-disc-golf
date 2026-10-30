@@ -35,7 +35,10 @@ function initRewardRoll(){renderRewardTables();$('#rollReward')?.addEventListene
         raise SystemExit('App initialization marker not found')
     s = s.replace(init_marker, init_marker + 'initRewardRoll();', 1)
 
-# Fix the Rules tab Distance Limit chart formatting while the existing source-update workflow is running.
+# Fix the Rules tab Distance Limit chart formatting during the existing Pages build.
+# The Rules content is embedded in a large single-line HTML file, so do not rely on
+# exact newline/HTML formatting around the CONTROL heading. Replace from the table's
+# first "Power" through the next occurrence of "CONTROL".
 table = """Power\tPutter (Speed 1-3)\tMidrange (Speed 4-6)\tFairway (Speed 7-9)\tDriver (Speed 10-14)
 0 to 5\t75\t100\t0\t0
 6 to 10\t125\t150\t175\t200
@@ -47,16 +50,16 @@ table = """Power\tPutter (Speed 1-3)\tMidrange (Speed 4-6)\tFairway (Speed 7-9)\
 36 to 40\t725\t750\t775\t800
 41 to 45\t825\t850\t875\t900
 46 to 50\t925\t950\t975\t100"""
-anchor = 'There are limits to distances you can throw'
+anchor = "There are limits to distances you can throw, based on your Power and the type of disc you’re throwing, as seen in the following chart."
 anchor_pos = s.find(anchor)
 if anchor_pos != -1:
     start = s.find('Power', anchor_pos)
-    end = s.find('\n\nCONTROL', start)
+    end = s.find('CONTROL', start)
     if start != -1 and end != -1:
         s = s[:start] + table + s[end:]
         print('Distance Limit table formatted successfully')
     else:
-        print('Distance Limit table not found; leaving existing text unchanged')
+        print(f'Distance Limit table boundaries not found: start={start}, end={end}')
 else:
     print('Distance Limit section not found; leaving existing text unchanged')
 
