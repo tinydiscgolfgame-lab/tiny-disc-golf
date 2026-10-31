@@ -54,5 +54,21 @@ if anchor_pos != -1:
 else:
     print('Distance Limit section not found; leaving existing text unchanged')
 
+# Style the chart as a true bordered grid, matching the supplied reference image.
+distance_css = '''
+.distance-chart{width:100%;overflow-x:auto;margin:14px 0 20px;-webkit-overflow-scrolling:touch}
+.distance-chart table{width:100%;min-width:620px;border-collapse:collapse;table-layout:fixed}
+.distance-chart th,.distance-chart td{border:1px solid #333;text-align:center;vertical-align:middle;padding:7px 5px;line-height:1.25}
+.distance-chart th{font-weight:700;background:#f1f1f1;color:#111}
+.distance-chart td{color:inherit}
+.distance-chart .power-range{font-weight:600}
+'''
+if '.distance-chart table{' not in s:
+    style_end = s.rfind('</style>')
+    if style_end != -1:
+        s = s[:style_end] + distance_css + s[style_end:]
+    else:
+        print('No style block found; chart table markup still added')
+
 p.write_text(s, encoding='utf-8')
 print('Reward Roll/source update completed')
