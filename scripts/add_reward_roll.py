@@ -41,18 +41,18 @@ function initRewardRoll(){renderRewardTables();$('#rollReward')?.addEventListene
 table_html = '''<div class="distance-chart"><table><thead><tr><th>Power</th><th>Putter (Speed 1-3)</th><th>Midrange (Speed 4-6)</th><th>Fairway (Speed 7-9)</th><th>Driver (Speed 10-14)</th></tr></thead><tbody><tr><td class="power-range">0 to 5</td><td>75</td><td>100</td><td>0</td><td>0</td></tr><tr><td class="power-range">6 to 10</td><td>125</td><td>150</td><td>175</td><td>200</td></tr><tr><td class="power-range">11 to 15</td><td>225</td><td>250</td><td>275</td><td>300</td></tr><tr><td class="power-range">16 to 20</td><td>325</td><td>350</td><td>375</td><td>400</td></tr><tr><td class="power-range">21 to 25</td><td>425</td><td>450</td><td>475</td><td>500</td></tr><tr><td class="power-range">26 to 30</td><td>525</td><td>550</td><td>575</td><td>600</td></tr><tr><td class="power-range">31 to 35</td><td>625</td><td>650</td><td>675</td><td>700</td></tr><tr><td class="power-range">36 to 40</td><td>725</td><td>750</td><td>775</td><td>800</td></tr><tr><td class="power-range">41 to 45</td><td>825</td><td>850</td><td>875</td><td>900</td></tr><tr><td class="power-range">46 to 50</td><td>925</td><td>950</td><td>975</td><td>100</td></tr></tbody></table></div>'''
 anchor = "There are limits to distances you can throw, based on your Power and the type of disc you’re throwing, as seen in the following chart."
 anchor_pos = s.find(anchor)
-if anchor_pos != -1:
+if anchor_pos != -1 and '<div class="distance-chart">' not in s[anchor_pos:s.find('CONTROL', anchor_pos)]:
     start = s.find('Power\tPutter', anchor_pos)
     if start == -1:
         start = s.find('Power', anchor_pos)
     end = s.find('CONTROL', start)
     if start != -1 and end != -1:
-        s = s[:start] + table_html + '\n' + s[end:]
+        s = s[:start] + table_html + '\\n' + s[end:]
         print('Distance Limit HTML table formatted successfully')
     else:
         print(f'Distance Limit table boundaries not found: start={start}, end={end}')
 else:
-    print('Distance Limit section not found; leaving existing text unchanged')
+    print('Distance Limit HTML table already present; leaving it intact')
 
 # Style the chart as a true bordered grid, matching the supplied reference image.
 distance_css = '''
