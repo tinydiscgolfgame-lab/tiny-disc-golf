@@ -990,7 +990,7 @@ function init(){
   renderQuickModifiers();
 
   const dirs=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];let spin=0;
-  $('#spin').addEventListener('click',()=>{const i=Math.floor(Math.random()*16),target=i*22.5;spin+=1080+((target-spin)%360+360)%360;$('#arrow').style.transform='rotate('+spin+'deg)';$('#dirResult').textContent=dirs[i]});
+  $('#spin').addEventListener('click',()=>{const i=Math.floor(Math.random()*16),target=(i*22.5+270)%360;spin+=1080+((target-(spin%360)+360)%360);$('#arrow').style.transform='rotate('+spin+'deg)';$('#dirResult').textContent=dirs[i]});
 
   $('#addCourseHole').addEventListener('click',()=>{
     if(courseEditorHoles>=36){window.alert('A course can have up to 36 holes.');return}
